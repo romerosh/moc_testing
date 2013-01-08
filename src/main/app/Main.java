@@ -4,17 +4,13 @@ import java.io.Console;
 import java.util.Collection;
 import java.util.Scanner;
 
-import data.contracts.IDataBaseService;
-import data.contracts.repositories.RepositoryException;
 import data.db.DataBaseService;
 import data.db.IDBConnectionFactory;
 import data.db.impl.DBConnectionFactory;
 import data.db.impl.PGDataSource;
-import data.orm.Group;
-import data.orm.Mark;
 import data.orm.ORMObjectException;
-import data.orm.Student;
-import data.orm.Subject;
+
+
 
 public class Main {
 
@@ -106,7 +102,7 @@ public class Main {
 				{
 					System.out.print("Enter mark:   ");
 					int m = inp.nextInt();
-					Mark mark = new Mark (m,)
+					//Mark mark = new Mark (m,)
 				}
 
 			}
