@@ -1,8 +1,18 @@
 package app;
 
 import java.io.Console;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
+
+import log.ILogger;
+import log.ILoggerProvider;
+import log.SimpleLoggerFactory;
+import log.appenders.FileAppender;
+import log.impl.SimpleLoggerProvider;
 
 import data.contracts.IDataBaseService;
 import data.contracts.repositories.RepositoryException;
@@ -27,11 +37,21 @@ public class Main {
 
 		return factory;
 	}
-
+	public static ILoggerProvider prepareLogProvider(){
+		List<String> msgTypes = Arrays.asList(ILogger.INFO,ILogger.ERROR,ILogger.WARN);
+		
+		ILoggerProvider logProvider = new SimpleLoggerProvider();
+		logProvider.addAppender(new FileAppender(), msgTypes);
+		return logProvider;
+	}
 	public static void main(String[] args) throws ORMObjectException {
 		IDataBaseService db = null;
 		Scanner inp = new Scanner(System.in);
+		
+		
 		try {
+			SimpleLoggerFactory.Initialize(prepareLogProvider());
+
 			IDBConnectionFactory connectionFactory = getDBConnectionFactory();
 			db = new DataBaseService(connectionFactory);
 

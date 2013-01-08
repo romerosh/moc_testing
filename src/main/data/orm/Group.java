@@ -2,13 +2,17 @@ package data.orm;
 
 import java.util.Collection;
 
+import log.ILogger;
+import log.SimpleLoggerFactory;
+
 import data.contracts.IDataBaseService;
 import data.contracts.repositories.RepositoryException;
 
 public class Group extends ORMObject {
 	private int ID;
 	private String Name;
-
+	private final static ILogger log = SimpleLoggerFactory.getLogger();
+	
 	public Group() {
 
 	}
@@ -47,7 +51,7 @@ public class Group extends ORMObject {
 			} catch (RepositoryException e) {
 				throw new ORMObjectException("The student can not add to group");
 			}
-
+			log.info("add student to group");
 		} else
 			throw new ORMObjectException(
 					"This student was not linked with repository");

@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import log.ILogger;
+import log.SimpleLoggerFactory;
+
 import data.contracts.IDataBaseService;
 import data.contracts.repositories.IGroupsRepository;
 import data.contracts.repositories.RepositoryException;
@@ -18,6 +21,7 @@ import data.orm.ORMObjectException;
 import data.orm.Student;
 
 public class GroupsRepository extends Repository implements IGroupsRepository {
+
 
 	public GroupsRepository(IDataBaseService dataBaseService,
 			IDBConnectionFactory connectionFactory) {
