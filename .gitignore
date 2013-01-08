@@ -1,8 +1,17 @@
-
-#ignore thumbnails created by windows
-Thumbs.db
+*.project~
+*.classpath~
+*.project
+*.classpath
+*.settings
+*.private
+*.jar
 *.class
-#Ignore files build by Visual Studio
+bin*/
+target*/
+build/
+bin/
+target/
+
 *.obj
 *.exe
 *.pdb
