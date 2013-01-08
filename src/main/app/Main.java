@@ -61,6 +61,7 @@ public class Main {
 				}
 			}
 			if (cmd.equals("get_groups") == true) {
+				try {
 				System.out.print("----" + "  " + "Groups" + "  " + "----"
 						+ "\n");
 				System.out.print("id" + "  " + " |" + "  " + "Name " + "\n");
@@ -69,9 +70,13 @@ public class Main {
 					System.out.print(g.getID() + "  " + " |" + "  "
 							+ g.getName() + "\n");
 				}
-				System.out.print("ok" + "\n");
+				System.out.print("ok\n");
+				} catch (Exception e) {
+					System.out.print("failed.\n");
+				}
 			}
 			if (cmd.equals("add_studs") == true) {
+				try{
 				System.out.print("Student name:   ");
 				String stud_name = inp.nextLine();
 				System.out.print("Student surname:   ");
@@ -79,8 +84,13 @@ public class Main {
 				Student student = new Student(stud_name, stud_surname);
 				db.getStudents().insert(student);
 				System.out.print("ok" + "\n");
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
 			}
 			if (cmd.equals("get_studs") == true) {
+				try {
 				System.out.print("--------" + "  " + "Students" + "  "
 						+ "--------" + "\n");
 				System.out.print("id" + "  " + " |" + "  " + "Name " + "  "
@@ -91,15 +101,25 @@ public class Main {
 							+ st.getName() + " |" + st.getSurname() + "\n");
 				}
 				System.out.print("ok" + "\n");
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
 			}
 			if (cmd.equals("add_subj") == true) {
+				try{
 				System.out.print("Subject name:   ");
 				String subj = inp.nextLine();
 				Subject subject = new Subject(subj);
 				db.getSubjects().insert(subject);
 				System.out.print("ok" + "\n");
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
 			}
 			if (cmd.equals("get_subj") == true) {
+				try{
 				System.out.print("----" + "  " + "Subjects" + "  " + "----"
 						+ "\n");
 				System.out.print("id" + "  " + " |" + "  " + "Name " + "\n");
@@ -109,12 +129,21 @@ public class Main {
 							+ subj.getSubjName() + "\n");
 				}
 				System.out.print("ok" + "\n");
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
 			}
 
 			if (cmd.equals("add_mark") == true) {
+				try{
 				System.out.print("Enter mark:   ");
 				int m = inp.nextInt();
 				// Mark mark = new Mark (m,)
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
 			}
 
 		}
