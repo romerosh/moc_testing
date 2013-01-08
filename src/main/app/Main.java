@@ -106,6 +106,7 @@ public class Main {
 				{
 					System.out.print("Enter mark:   ");
 					int m = inp.nextInt();
+					Mark mark = new Mark (m,)
 				}
 
 			}
