@@ -1,5 +1,3 @@
-
-#ignore thumbnails created by java
 *.project~
 *.classpath~
 *.project
