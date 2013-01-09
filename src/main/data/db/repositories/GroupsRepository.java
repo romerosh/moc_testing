@@ -192,28 +192,17 @@ public class GroupsRepository extends Repository implements IGroupsRepository {
 	public Collection<Student> getAllByGroup(Group newGroup) throws RepositoryException {
 		Connection c = super.getConnection();
 		Collection <Student> students = null;
-
 		try {
-			String query = "select students.name, students.surname, groups.name as group_name from students, groups"
-					+ "join group_students on group_students.group_id = groups.id "
-					+  "where groups.id = ?;";
+			String query = "select * from group_students"
+						    + "where group_students.group_id = ? ;";
 			PreparedStatement ps = c.prepareStatement(query);
 			ps.setInt(1, newGroup.getID());
 			ResultSet key = ps.executeQuery();
 			students = new ArrayList<Student>();
 			while (key.next()) {
 				Student student = new Student();
-				Group group = new Group();
-				int id = key.getInt("id");
-				String group_name = key.getString("group_name");
-				String name = key.getString("name");
-				String surname = key.getString("surname");
-				student.setID(id);
-				student.setName(name);
-				student.setSurname(surname);
-				group.setName(group_name);
-				group.setDb(dataBaseService);
 				students.add(student);
+				student.setDb(dataBaseService);
 			}
 		} catch (SQLException e) {
 			super.throwable(e, RepositoryException.err_enum.c_sql_err);

@@ -154,7 +154,7 @@ public class StudentsRepository extends Repository implements IStudentsRepositor
 			while (key.next()) {
 				Mark mark = new Mark();
 				int id = key.getInt("id");
-				student.setID(id);
+				mark.setID(id);
 				mark.setDb(dataBaseService);
 				marks.add(mark);
 			}
