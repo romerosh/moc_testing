@@ -14,7 +14,6 @@ import log.appenders.file.FileManager;
 import log.impl.SimpleLoggerProvider;
 
 import data.contracts.IDataBaseService;
-import data.contracts.repositories.RepositoryException;
 import data.db.DataBaseService;
 import data.db.IDBConnectionFactory;
 import data.db.impl.DBConnectionFactory;
@@ -93,6 +92,7 @@ public class Main {
 						System.out.print("failed.\n");
 					}
 				}
+				
 				if (cmd.equals("add_studs") == true) {
 					try {
 						System.out.print("Student name:   ");
