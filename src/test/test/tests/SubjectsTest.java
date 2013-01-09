@@ -1,10 +1,14 @@
 package test.tests;
 
 import static org.junit.Assert.*;
+import log.SimpleLoggerFactory;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import test.data.TestDataBaseService;
+import test.log.TestLogProvider;
 
 import data.contracts.IDataBaseService;
 import data.contracts.repositories.RepositoryException;
@@ -17,7 +21,15 @@ import data.orm.Subject;
 
 public class SubjectsTest {
 	
-	
+	@Before
+	public void init() {
+		SimpleLoggerFactory.Initialize(TestLogProvider.prepareProvider());
+	}
+
+	@After
+	public void destroy() {
+		SimpleLoggerFactory.Dispose();
+	}
 	@Test
 	public void addGroupTest() throws ORMObjectException, RepositoryException {
 		IDataBaseService db = new TestDataBaseService();
