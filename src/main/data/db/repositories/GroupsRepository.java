@@ -229,8 +229,6 @@ public class GroupsRepository extends Repository implements IGroupsRepository {
 		Connection c = super.getConnection();
 		try {
 			String query = "delete from group_students"
-					+"join groups on group_students.group_id = groups.id"
-					+ "join students on group_students.stud_id = students.id"
 					+ "where group_students.group_id = ? and group_students.stud_id = ?; ";
 			PreparedStatement ps = c.prepareStatement(query);
 			ps.setInt(1, group.getID());
