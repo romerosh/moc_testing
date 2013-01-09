@@ -85,6 +85,12 @@ public class TestSubjectsRepository implements ISubjectsRepository {
 		}
 		return null;
 	}
+
+	@Override
+	public boolean attach(Subject obj) throws RepositoryException {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 
 }

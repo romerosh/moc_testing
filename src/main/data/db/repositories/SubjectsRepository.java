@@ -12,6 +12,7 @@ import data.contracts.repositories.ISubjectsRepository;
 import data.contracts.repositories.RepositoryException;
 import data.db.IDBConnectionFactory;
 import data.db.Repository;
+import data.orm.Group;
 import data.orm.Subject;
 
 public class SubjectsRepository extends Repository implements ISubjectsRepository
@@ -158,6 +159,19 @@ public class SubjectsRepository extends Repository implements ISubjectsRepositor
 		}
 		return subject;
 
+	}
+
+	@Override
+	public boolean attach(Subject obj) throws RepositoryException {
+		if (obj.getDb() != null && obj.getID() > 0)
+			return true;
+		Subject g = this.getSubjectByName(obj.getSubjName());
+		if (g == null)
+			return false;
+		obj.setDb(null);
+		obj.setID(g.getID());
+		obj.setDb(dataBaseService);
+		return true;
 	}
 
 }

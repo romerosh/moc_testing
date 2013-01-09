@@ -207,13 +207,17 @@ public class Main {
 						System.out.print("Enter group:   ");
 						String gr = inp.nextLine();
 						Group group = db.getGroups().getByName(gr);
+						if(group == null){
+							System.out.print("Faied! The group was not found");
+							continue;
+						}
 						System.out.print("Student name:   ");
 						String stud_name = inp.nextLine();
 						System.out.print("Student surname:   ");
 						String stud_surname = inp.nextLine();
 						student.setName(stud_name);
 						student.setSurname(stud_surname);
-						//group.addStudent(student);
+						group.addStudent(student);
 						/*System.out.print(db.getGroups().getByID(group.getID())
 								+ "    "
 								+ db.getStudents().getByID(student.getID()));*/
@@ -233,15 +237,20 @@ public class Main {
 						Student student = db.getStudents().getByName(stud_name, stud_surname);						
 						Collection<Student> students = db.getStudents()
 								.getAll();
+						boolean isFound = false;
 						for (Student st : students) {
 							if (st.getName().equals(stud_name)
 									&& st.getSurname().equals(stud_surname)) {
 								db.getStudents().remove(student.getID());								
 								System.out.print("ok\n");
-							} else {
-								System.out.print("Student was not faund\n");
-							}
+								isFound = true;
+							} 
 						}
+						/*
+						else {
+							System.out.print("Student was not faund\n");
+						}*/
+						
 
 					} catch (Exception e) {
 						System.out.print("failed.\n");
@@ -323,6 +332,7 @@ public class Main {
 				}
 
 				if (cmd.equals("exit") == true) {
+					System.out.print("Bye bye :)\n");
 					return;
 				}
 				System.out.print("Failed! Command was not found. Please, try again! \n");

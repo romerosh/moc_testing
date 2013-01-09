@@ -12,6 +12,7 @@ import data.contracts.repositories.RepositoryException;
 import data.db.DataBaseService;
 import data.db.IDBConnectionFactory;
 import data.db.Repository;
+import data.orm.Group;
 import data.orm.Mark;
 import data.orm.ORMObjectException;
 import data.orm.Student;
@@ -301,6 +302,19 @@ public class StudentsRepository extends Repository implements
 		} finally {
 			super.closeConnection(c);
 		}
+	}
+
+	@Override
+	public boolean attach(Student obj) throws RepositoryException {
+		if (obj.getDb() != null && obj.getID() > 0)
+			return true;
+		Student st = this.getByName(obj.getName(), obj.getSurname());
+		if (st == null)
+			return false;
+		obj.setDb(null);
+		obj.setID(st.getID());
+		obj.setDb(dataBaseService);
+		return true;
 	}
 
 }

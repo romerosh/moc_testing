@@ -117,4 +117,10 @@ public class TestGroupsRepository implements IGroupsRepository {
 		}
 		return students;
 	}
+
+	@Override
+	public boolean attach(Group obj) throws RepositoryException {
+		
+		return false;
+	}
 }

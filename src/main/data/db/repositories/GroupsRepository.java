@@ -22,7 +22,6 @@ import data.orm.Student;
 
 public class GroupsRepository extends Repository implements IGroupsRepository {
 
-
 	public GroupsRepository(IDataBaseService dataBaseService,
 			IDBConnectionFactory connectionFactory) {
 		super(dataBaseService, connectionFactory);
@@ -165,8 +164,7 @@ public class GroupsRepository extends Repository implements IGroupsRepository {
 	}
 
 	@Override
-	public double getAverageMark(int groupID) throws
-			RepositoryException {
+	public double getAverageMark(int groupID) throws RepositoryException {
 		Connection c = super.getConnection();
 		double avg = 0.0;
 		try {
@@ -188,12 +186,13 @@ public class GroupsRepository extends Repository implements IGroupsRepository {
 	}
 
 	@Override
-	public Collection<Student> getAllByGroup(Group newGroup) throws RepositoryException {
+	public Collection<Student> getAllByGroup(Group newGroup)
+			throws RepositoryException {
 		Connection c = super.getConnection();
-		Collection <Student> students = null;
+		Collection<Student> students = null;
 		try {
 			String query = "select * from group_students"
-						    + "where group_students.group_id = ? ;";
+					+ "where group_students.group_id = ? ;";
 			PreparedStatement ps = c.prepareStatement(query);
 			ps.setInt(1, newGroup.getID());
 			ResultSet key = ps.executeQuery();
@@ -209,11 +208,12 @@ public class GroupsRepository extends Repository implements IGroupsRepository {
 			super.closeConnection(c);
 		}
 		return students;
-		
+
 	}
 
 	@Override
-	public void removeStudent(Group group, Student student) throws RepositoryException {
+	public void removeStudent(Group group, Student student)
+			throws RepositoryException {
 		Connection c = super.getConnection();
 		try {
 			String query = "delete from group_students"
@@ -248,6 +248,19 @@ public class GroupsRepository extends Repository implements IGroupsRepository {
 			super.closeConnection(c);
 		}
 
+	}
+
+	@Override
+	public boolean attach(Group obj) throws RepositoryException {
+		if (obj.getDb() != null && obj.getID() > 0)
+			return true;
+		Group g = this.getByName(obj.getName());
+		if (g == null)
+			return false;
+		obj.setDb(null);
+		obj.setID(g.getID());
+		obj.setDb(dataBaseService);
+		return true;
 	}
 
 }

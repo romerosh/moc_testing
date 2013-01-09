@@ -25,4 +25,5 @@ public interface IStudentsRepository extends IRepository<Student> {
 	public Student getByName(String name, String surname) throws RepositoryException;
 
 	public void updateMark(Mark mark)throws RepositoryException;
+	
 }

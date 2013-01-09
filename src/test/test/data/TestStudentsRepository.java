@@ -147,4 +147,10 @@ public class TestStudentsRepository implements IStudentsRepository {
 		
 	}
 
+	@Override
+	public boolean attach(Student obj) throws RepositoryException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

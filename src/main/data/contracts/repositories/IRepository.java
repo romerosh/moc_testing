@@ -10,4 +10,5 @@ public interface IRepository<T> {
 	void insert(T obj) throws RepositoryException;
 	void remove(int ID) throws RepositoryException;
 	void update(T obj) throws RepositoryException;
+	boolean attach(T obj) throws RepositoryException;
 }
