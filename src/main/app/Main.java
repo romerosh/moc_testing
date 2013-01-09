@@ -326,17 +326,9 @@ public class Main {
 				}
 
 				if (cmd.equals("exit") == true) {
-					try {
-
-						return;
-					}
-
-					catch (Exception e) {
-						System.out.print("failed.\n");
-					}
-					continue;
+					return;
 				}
-				System.out.print("Fail comand. Try again! \n");
+				System.out.print("Failed! Command was not found. Please, try again! \n");
 			}
 		} catch (Exception e) {
 
