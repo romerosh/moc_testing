@@ -94,8 +94,6 @@ public class StudentsRepository extends Repository implements IStudentsRepositor
 			if (key.next()) {
 				int id = key.getInt("id");
 				obj.setID(id);
-				/*obj.setName(obj.getName());
-				obj.setSurname(obj.getSurname());*/
 				obj.setDb(dataBaseService);
 			}
 			super.commit(c);
@@ -245,7 +243,7 @@ public class StudentsRepository extends Repository implements IStudentsRepositor
 				int id = key.getInt("id");
 				student.setID(id);
 				student.setName(name);
-				student.setName(surname);
+				student.setSurname(surname);
 				student.setDb(dataBaseService);
 			}
 		} catch (SQLException e) {
