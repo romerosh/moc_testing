@@ -34,7 +34,7 @@ public class Student extends ORMObject {
 	public void setName(String name) throws RepositoryException {
 		Name = name;
 		if (this.db != null) {
-			this.db.getStudents().update(this);
+			this.db.Students().update(this);
 		}
 	}
 
@@ -45,19 +45,19 @@ public class Student extends ORMObject {
 	public void setSurname(String surname) throws RepositoryException {
 		Surname = surname;
 		if (this.db != null) {
-			this.db.getStudents().update(this);
+			this.db.Students().update(this);
 		}
 	}
 
 	public double getAverage_Mark() throws ORMObjectException,
 			RepositoryException {
-		return this.db.getStudents().getAverageMark(this);
+		return this.db.Students().getAverageMark(this);
 	}
 
 	public Collection<Mark> GetMarks() throws ORMObjectException,
 			RepositoryException {
 		if (this.db != null) {
-			return this.db.getStudents().GetMarks(this);
+			return this.db.Students().GetMarks(this);
 		} else
 			throw new ORMObjectException(
 					"This student was not linked with repository");
@@ -79,7 +79,7 @@ public class Student extends ORMObject {
 	public void RemoveMark(Mark mark) throws ORMObjectException,
 			RepositoryException {
 		if (this.db != null) {
-			this.db.getStudents().remove(mark.getID());
+			this.db.Students().remove(mark.getID());
 		} else
 			throw new ORMObjectException(
 					"This student was not linked with repository");

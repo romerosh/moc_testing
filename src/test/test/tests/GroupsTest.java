@@ -43,10 +43,10 @@ public class GroupsTest {
 	public void addGroupTest() throws RepositoryException {
 		IDataBaseService db = new TestDataBaseService();
 		Group group = ORMObjectFactory.createGroupObj(db, "IF-58A");
-		int groupsCount = db.getGroups().getAll().size();
-		db.getGroups().insert(group);
+		int groupsCount = db.Groups().getAll().size();
+		db.Groups().insert(group);
 		assertTrue(group.getID() > 0);
-		assertEquals(db.getGroups().getAll().size(), groupsCount + 1);
+		assertEquals(db.Groups().getAll().size(), groupsCount + 1);
 
 	}
 
@@ -61,9 +61,9 @@ public class GroupsTest {
 		Student newStudent = ORMObjectFactory.createStudentObj(db, "Marianna",
 				"Roshchenko");
 
-		int OldStudentsCount = db.getGroups().getAllByGroup(newGroup).size();
+		int OldStudentsCount = db.Groups().getAllByGroup(newGroup).size();
 		newGroup.addStudent(newStudent);
-		int NewStudentsCount = db.getGroups().getAllByGroup(newGroup).size();
+		int NewStudentsCount = db.Groups().getAllByGroup(newGroup).size();
 		assertEquals(OldStudentsCount, NewStudentsCount - 1);
 
 		newGroup.getAverageMark();

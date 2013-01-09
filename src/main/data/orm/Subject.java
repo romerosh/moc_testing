@@ -29,7 +29,7 @@ public class Subject extends ORMObject {
 	public void setSubjName(String subjName) throws RepositoryException {
 		SubjName = subjName;
 		if (this.db != null) {
-			this.db.getSubjects().update(this);
+			this.db.Subjects().update(this);
 		}
 	}
 

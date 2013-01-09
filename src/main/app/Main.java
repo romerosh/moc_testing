@@ -64,7 +64,7 @@ public class Main {
 						System.out.print("Group Name:   ");
 						String gr = inp.nextLine();
 						Group group = new Group(gr);
-						db.getGroups().insert(group);
+						db.Groups().insert(group);
 						System.out.print("ok\n");
 					} catch (Exception e) {
 						System.out.print("failed.\n");
@@ -78,7 +78,7 @@ public class Main {
 								+ "----" + "\n");
 						System.out.print("id" + "  " + " |" + "  " + "Name "
 								+ "\n");
-						Collection<Group> groups = db.getGroups().getAll();
+						Collection<Group> groups = db.Groups().getAll();
 						for (Group g : groups) {
 							System.out.print(g.getID() + "  " + " |" + "  "
 									+ g.getName() + "\n");
@@ -96,7 +96,7 @@ public class Main {
 						System.out.print("Student surname:   ");
 						String stud_surname = inp.nextLine();
 						Student student = new Student(stud_name, stud_surname);
-						db.getStudents().insert(student);
+						db.Students().insert(student);
 						System.out.print("ok" + "\n");
 					} catch (Exception e) {
 						System.out.print("failed.\n");
@@ -109,7 +109,7 @@ public class Main {
 								+ "--------" + "\n");
 						System.out.print("id" + "  " + " |" + "  " + "Name "
 								+ "  " + " |" + " Surname" + "\n");
-						Collection<Student> students = db.getStudents()
+						Collection<Student> students = db.Students()
 								.getAll();
 						for (Student st : students) {
 							System.out.print(st.getID() + "  " + " |" + "  "
@@ -127,7 +127,7 @@ public class Main {
 						System.out.print("Subject name:   ");
 						String subj = inp.nextLine();
 						Subject subject = new Subject(subj);
-						db.getSubjects().insert(subject);
+						db.Subjects().insert(subject);
 						System.out.print("ok" + "\n");
 					} catch (Exception e) {
 						System.out.print("failed.\n");
@@ -140,7 +140,7 @@ public class Main {
 								+ "----" + "\n");
 						System.out.print("id" + "  " + " |" + "  " + "Name "
 								+ "\n");
-						Collection<Subject> subjects = db.getSubjects()
+						Collection<Subject> subjects = db.Subjects()
 								.getAll();
 						for (Subject subj : subjects) {
 							System.out.print(subj.getID() + "  " + " |" + "  "
@@ -158,8 +158,8 @@ public class Main {
 						System.out.print("Enter group:   ");
 						String gr = inp.nextLine();
 						// Group en_group = new Group (gr);
-						Group group = db.getGroups().getByName(gr);
-						db.getGroups().remove(group.getID());
+						Group group = db.Groups().getByName(gr);
+						db.Groups().remove(group.getID());
 						System.out.print("ok\n");
 					} catch (Exception e) {
 						System.out.print("failed.\n");
@@ -172,12 +172,12 @@ public class Main {
 						System.out.print("Enter old group:   ");
 						String old_gr = inp.nextLine();
 						// Group en_group = new Group (gr);
-						Group old_group = db.getGroups().getByName(old_gr);
+						Group old_group = db.Groups().getByName(old_gr);
 						System.out.print("Enter new group:   ");
 						String new_gr = inp.nextLine();
-						Group new_group = db.getGroups().getByName(new_gr);
+						Group new_group = db.Groups().getByName(new_gr);
 						old_group = new_group;
-						db.getGroups().update(old_group);
+						db.Groups().update(old_group);
 						System.out.print("ok\n");
 					} catch (Exception e) {
 						System.out.print("failed.\n");
@@ -189,7 +189,7 @@ public class Main {
 					try {
 						System.out.print("Enter group:   ");
 						String gr = inp.nextLine();
-						Group group = db.getGroups().getByName(gr);
+						Group group = db.Groups().getByName(gr);
 						System.out.print("id" + "  " + " |" + "  " + "Name "
 								+ "\n");
 						System.out.print(group.getID() + "  " + " |" + "  "
@@ -206,7 +206,7 @@ public class Main {
 						Student student = new Student();
 						System.out.print("Enter group:   ");
 						String gr = inp.nextLine();
-						Group group = db.getGroups().getByName(gr);
+						Group group = db.Groups().getByName(gr);
 						if(group == null){
 							System.out.print("Faied! The group was not found");
 							continue;
@@ -234,14 +234,14 @@ public class Main {
 						String stud_name = inp.nextLine();
 						System.out.print("Student surname:   ");
 						String stud_surname = inp.nextLine();
-						Student student = db.getStudents().getByName(stud_name, stud_surname);						
-						Collection<Student> students = db.getStudents()
+						Student student = db.Students().getByName(stud_name, stud_surname);						
+						Collection<Student> students = db.Students()
 								.getAll();
 						boolean isFound = false;
 						for (Student st : students) {
 							if (st.getName().equals(stud_name)
 									&& st.getSurname().equals(stud_surname)) {
-								db.getStudents().remove(student.getID());								
+								db.Students().remove(student.getID());								
 								System.out.print("ok\n");
 								isFound = true;
 							} 
@@ -261,9 +261,9 @@ public class Main {
 					try {
 						System.out.print("Enter subject:   ");
 						String sub = inp.nextLine();
-						Subject subject = db.getSubjects()
+						Subject subject = db.Subjects()
 								.getSubjectByName(sub);
-						db.getSubjects().remove(subject.getID());
+						db.Subjects().remove(subject.getID());
 						System.out.print("ok\n");
 					} catch (Exception e) {
 						System.out.print("failed.\n");
@@ -277,16 +277,14 @@ public class Main {
 						String stud_name = inp.nextLine();
 						System.out.print("Student surname:   ");
 						String stud_surname = inp.nextLine();
-						Student student = db.getStudents().getByName(stud_name,
+						Student student = db.Students().getByName(stud_name,
 								stud_surname);
 						System.out.print("Subject name:   ");
 						String subj = inp.nextLine();
-						Subject subject = db.getSubjects().getSubjectByName(
-								subj);
-						Mark mark = new Mark(db.getSubjects().getByID(
-								subject.getID()), db.getStudents().getByID(
-								student.getID()), 5);
-						db.getStudents().AddMark(mark);
+						System.out.print("Mark:   ");
+						String mark = inp.nextLine();
+						
+						student.AddMark(new Subject(subj), Integer.parseInt(mark));
 						System.out.print("ok\n");
 					} catch (Exception e) {
 						System.out.print("failed.\n");
@@ -300,11 +298,11 @@ public class Main {
 						String stud_name = inp.nextLine();
 						System.out.print("Student surname:   ");
 						String stud_surname = inp.nextLine();
-						Student student = db.getStudents().getByName(stud_name,
+						Student student = db.Students().getByName(stud_name,
 								stud_surname);
 						System.out.print("Subject name:   ");
 						String subj = inp.nextLine();
-						Subject subject = db.getSubjects().getSubjectByName(
+						Subject subject = db.Subjects().getSubjectByName(
 								subj);
 						// System.out.print(mark.getID());
 						// db.getStudents().RemoveMark(mark.getID());
@@ -320,7 +318,7 @@ public class Main {
 								+ "----" + "\n");
 						System.out.print("id" + "  " + " |" + "  " + "Name "
 								+ "\n");
-						Collection<Mark> marks = db.getStudents().GetAllMarks();
+						Collection<Mark> marks = db.Marks().getAll();
 						for (Mark m : marks) {
 							System.out.print(m.getStudent_id());
 						}

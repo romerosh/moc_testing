@@ -33,7 +33,7 @@ public class Mark extends ORMObject {
 	public void setMark(int mark)  throws RepositoryException{
 		Mark = mark;
 		if(this.db != null){
-			this.db.getStudents().updateMark(this);
+			this.db.Marks().update(this);
 		}
 	
 	}

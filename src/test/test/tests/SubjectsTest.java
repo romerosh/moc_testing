@@ -36,22 +36,22 @@ public class SubjectsTest {
 		
 		//Create group
 		Group group = ORMObjectFactory.createGroupObj(db,"IF-58A");
-		int groupsCount = db.getGroups().getAll().size();
-		db.getGroups().insert(group);
+		int groupsCount = db.Groups().getAll().size();
+		db.Groups().insert(group);
 		assertTrue(group.getID()>0);
-		assertEquals(db.getGroups().getAll().size(), groupsCount + 1);
+		assertEquals(db.Groups().getAll().size(), groupsCount + 1);
 		
 		//Create subjects
 		Subject subject1 = ORMObjectFactory.createSubjectObj(db,"Matan");		
-		int subjCount = db.getSubjects().getAll().size();
-		db.getSubjects().insert(subject1);
+		int subjCount = db.Subjects().getAll().size();
+		db.Subjects().insert(subject1);
 		assertTrue (subject1.getID()>0);
-		assertEquals(db.getSubjects().getAll().size(), subjCount + 1);
+		assertEquals(db.Subjects().getAll().size(), subjCount + 1);
 		Subject subject2 = ORMObjectFactory.createSubjectObj(db,"Funkan");
-	    subjCount = db.getSubjects().getAll().size();
-		db.getSubjects().insert(subject2);
+	    subjCount = db.Subjects().getAll().size();
+		db.Subjects().insert(subject2);
 		assertTrue (subject2.getID()>0);
-		assertEquals(db.getSubjects().getAll().size(), subjCount + 1);
+		assertEquals(db.Subjects().getAll().size(), subjCount + 1);
 		
 		//Create students
 		Student stud1 = ORMObjectFactory.createStudentObj(db,"Marianna","Roshchenko");
@@ -69,10 +69,10 @@ public class SubjectsTest {
 		// Insert marks
 		stud1.AddMark(subject1, 5);
 		stud1.AddMark(subject2, 4);
-		assertEquals(db.getSubjects().getAll().size(), subjCount + 1);
+		assertEquals(db.Subjects().getAll().size(), subjCount + 1);
 		stud2.AddMark(subject1, 5);
 		stud2.AddMark(subject2, 5);
-		assertEquals(db.getSubjects().getAll().size(), subjCount + 1);
+		assertEquals(db.Subjects().getAll().size(), subjCount + 1);
 		
 		//Average mark
 		stud1.getAverage_Mark();

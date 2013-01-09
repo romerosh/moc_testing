@@ -36,7 +36,7 @@ public class Group extends ORMObject {
 	public void setName(String name) throws RepositoryException {
 		Name = name;
 		if (this.db != null) {
-			this.db.getGroups().update(this);
+			this.db.Groups().update(this);
 		}
 
 	}
@@ -44,8 +44,8 @@ public class Group extends ORMObject {
 	public void addStudent(Student student) throws ORMObjectException {
 		if (this.db != null) {
 			try {
-				this.db.getStudents().attach(student);
-				this.db.getGroups().addStudent(this, student);
+				this.db.Students().attach(student);
+				this.db.Groups().addStudent(this, student);
 			} catch (RepositoryException e) {
 				throw new ORMObjectException("The student can not add to group");
 			}
@@ -58,8 +58,8 @@ public class Group extends ORMObject {
 	public void removeStudent(Student student) throws ORMObjectException,
 			RepositoryException {
 		if (this.db != null) {
-			this.db.getStudents().attach(student);
-			this.db.getGroups().removeStudent(this, student);
+			this.db.Students().attach(student);
+			this.db.Groups().removeStudent(this, student);
 		} else
 			throw new ORMObjectException(
 					"This student was not linked with repository");
@@ -68,7 +68,7 @@ public class Group extends ORMObject {
 	public Student getStudent(Student student) throws ORMObjectException,
 			RepositoryException {
 		if (this.db != null) {
-			this.db.getStudents().attach(student);
+			this.db.Students().attach(student);
 			for (Student st : getStudents()) {
 				if (st.getID() == student.getID()) {
 					return st;
@@ -83,7 +83,7 @@ public class Group extends ORMObject {
 	public Collection<Student> getStudents() throws ORMObjectException,
 			RepositoryException {
 		if (this.db != null) {
-			return this.db.getGroups().getAllByGroup(this);
+			return this.db.Groups().getAllByGroup(this);
 		} else
 			throw new ORMObjectException(
 					"This group was not linked with repository");
@@ -92,7 +92,7 @@ public class Group extends ORMObject {
 	public double getAverageMark() throws ORMObjectException,
 			RepositoryException {
 		if (this.db != null) {
-			return this.db.getGroups().getAverageMark(this.ID);
+			return this.db.Groups().getAverageMark(this.ID);
 		} else
 			throw new ORMObjectException(
 					"This group was not linked with repository");

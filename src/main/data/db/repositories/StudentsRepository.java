@@ -165,46 +165,6 @@ public class StudentsRepository extends Repository implements
 		return marks;
 	}
 
-	@Override
-	public void AddMark(Mark mark) throws RepositoryException {
-		Connection c = super.getConnection();
-		try {
-			String query = "insert into marks (mark, student_id, subject_id) values (?,?,?) returning id;";
-			PreparedStatement ps = c.prepareStatement(query);
-			ps.setInt(1, mark.getMark());
-			ps.setInt(2, mark.getStudent_id());
-			ps.setInt(3, mark.getSubject_id());
-			ResultSet key = ps.executeQuery();
-			if (key.next()) {
-				int id = key.getInt("id");
-				mark.setID(id);
-				mark.setDb(dataBaseService);
-			}
-			super.commit(c);
-		} catch (SQLException e) {
-			super.throwable(e, RepositoryException.err_enum.c_sql_err);
-		} finally {
-			super.closeConnection(c);
-		}
-
-	}
-
-	@Override
-	public void RemoveMark(int ID) throws RepositoryException {
-		Connection c = super.getConnection();
-		try {
-			String query = "delete from marks where id = ?;";
-			PreparedStatement ps = c.prepareStatement(query);
-			ps.setInt(1, ID);
-			ps.execute();
-			super.commit(c);
-		} catch (SQLException e) {
-			super.throwable(e, RepositoryException.err_enum.c_sql_err);
-		} finally {
-			super.closeConnection(c);
-		}
-
-	}
 
 	@Override
 	public double getAverageMark(Student student) throws ORMObjectException,
@@ -256,53 +216,6 @@ public class StudentsRepository extends Repository implements
 		return student;
 	}
 
-	@Override
-	public Collection<Mark> GetAllMarks() throws RepositoryException {
-		Connection c = super.getConnection();
-		Collection<Mark> marks = null;
-
-		try {
-			String query = "select * from marks;";
-			PreparedStatement ps = c.prepareStatement(query);
-			ResultSet key = ps.executeQuery();
-			marks = new ArrayList<Mark>();
-			while (key.next()) {
-
-				Mark mark = new Mark();
-				int id = key.getInt("id");
-				mark.setID(id);
-				mark.setMark(mark.getID());
-				mark.setStudent_id(mark.getStudent_id());
-				mark.setSubject_id(mark.getSubject_id());
-				mark.setDb(dataBaseService);
-				marks.add(mark);
-			}
-		} catch (SQLException e) {
-			super.throwable(e, RepositoryException.err_enum.c_sql_err);
-		} finally {
-			super.closeConnection(c);
-		}
-		return marks;
-	}
-
-	@Override
-	public void updateMark(Mark mark) throws RepositoryException {
-		Connection c = super.getConnection();
-		try {
-			String query = "update mars set mark = ?, student_id = ?, subject_id where id = ?;";
-			PreparedStatement ps = c.prepareStatement(query);
-			ps.setInt(1, mark.getMark());
-			ps.setInt(2, mark.getStudent_id());
-			ps.setInt(3, mark.getSubject_id());
-			ps.setInt(4, mark.getID());
-			ps.execute();
-			super.commit(c);
-		} catch (SQLException e) {
-			super.throwable(e, RepositoryException.err_enum.c_sql_err);
-		} finally {
-			super.closeConnection(c);
-		}
-	}
 
 	@Override
 	public boolean attach(Student obj) throws RepositoryException {

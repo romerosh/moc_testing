@@ -102,18 +102,6 @@ public class TestStudentsRepository implements IStudentsRepository {
 		return max;
 	}
 
-	@Override
-	public void AddMark(Mark mark) {
-		mark.setID(MaxMarkID() + 1);
-		mark.setDb(db);
-		marks.add(mark);
-	}
-
-	@Override
-	public void RemoveMark(int ID) {
-		marks.remove(getByID(ID));
-
-	}
 
 	@Override
 	public double getAverageMark(Student student) throws ORMObjectException, RepositoryException {
@@ -134,17 +122,6 @@ public class TestStudentsRepository implements IStudentsRepository {
 				return st;
 		}
 		return null;
-	}
-
-	@Override
-	public Collection<Mark> GetAllMarks() throws RepositoryException {
-		return marks;
-	}
-
-	@Override
-	public void updateMark(Mark mark) throws RepositoryException {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
