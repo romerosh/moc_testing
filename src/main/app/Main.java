@@ -75,6 +75,7 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 				if (cmd.equals("get_groups") == true) {
 					try {
@@ -91,8 +92,9 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
-				if (cmd.equals("add_studs") == true) {
+				if (cmd.equals("add_stud") == true) {
 					try {
 						System.out.print("Student name:   ");
 						String stud_name = inp.nextLine();
@@ -104,6 +106,7 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 				if (cmd.equals("get_studs") == true) {
 					try {
@@ -122,6 +125,7 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 				if (cmd.equals("add_subj") == true) {
 					try {
@@ -133,6 +137,7 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 				if (cmd.equals("get_subj") == true) {
 					try {
@@ -150,6 +155,7 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 
 				if (cmd.equals("remove_group") == true) {
@@ -163,6 +169,7 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 
 				if (cmd.equals("update_group") == true) {
@@ -180,6 +187,7 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 
 				if (cmd.equals("get_group_info") == true) {
@@ -195,6 +203,7 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 
 				if (cmd.equals("add_stud_in_group") == true) {
@@ -208,13 +217,14 @@ public class Main {
 						String stud_surname = inp.nextLine();
 						Student student = db.getStudents().getByName(stud_name,
 								stud_surname);
-						group.addStudent( student);
+						group.addStudent(student);
 						System.out.print(db.getGroups().getByID(group.getID())
 								+ "    "
 								+ db.getStudents().getByID(student.getID()));
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 
 				if (cmd.equals("remove_stud") == true) {
@@ -239,6 +249,7 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 				if (cmd.equals("remove_subj") == true) {
 					try {
@@ -251,6 +262,7 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 
 				if (cmd.equals("add_mark") == true) {
@@ -273,6 +285,7 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 
 				if (cmd.equals("remove_mark") == true) {
@@ -292,6 +305,7 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 
 				if (cmd.equals("get_marks") == true) {
@@ -308,8 +322,21 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+					continue;
 				}
 
+				if (cmd.equals("exit") == true) {
+					try {
+
+						return;
+					}
+
+					catch (Exception e) {
+						System.out.print("failed.\n");
+					}
+					continue;
+				}
+				System.out.print("Fail comand. Try again! \n");
 			}
 		} catch (Exception e) {
 
