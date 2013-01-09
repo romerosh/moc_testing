@@ -230,21 +230,26 @@ public class Main {
 
 				if (cmd.equals("remove_stud") == true) {
 					try {
+						boolean isFound = false;
 						System.out.print("Student name:   ");
 						String stud_name = inp.nextLine();
 						System.out.print("Student surname:   ");
 						String stud_surname = inp.nextLine();
-						Student student = db.Students().getByName(stud_name, stud_surname);						
+						Student student = db.getStudents().getByName(stud_name, stud_surname);
 						Collection<Student> students = db.Students()
 								.getAll();
 						boolean isFound = false;
 						for (Student st : students) {
 							if (st.getName().equals(stud_name)
-									&& st.getSurname().equals(stud_surname)) {
+									&& st.getSurname().equals(stud_surname) && isFound==false ) {
 								db.Students().remove(student.getID());								
 								System.out.print("ok\n");
 								isFound = true;
+								//if (isFound == true){break;}
 							} 
+							} else {
+								System.out.print("Student was not faund\n");
+							}
 						}
 						/*
 						else {
@@ -253,7 +258,9 @@ public class Main {
 						
 
 					} catch (Exception e) {
+						
 						System.out.print("failed.\n");
+						
 					}
 					continue;
 				}
