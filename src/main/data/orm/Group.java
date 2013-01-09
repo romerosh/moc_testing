@@ -36,7 +36,6 @@ public class Group extends ORMObject {
 	public void setName(String name) throws RepositoryException {
 		Name = name;
 		if(this.db != null){
-			
 			this.db.getGroups().update(this);
 		}
 			

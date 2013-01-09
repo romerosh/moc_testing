@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import data.contracts.IDataBaseService;
 import data.contracts.repositories.ISubjectsRepository;
+import data.contracts.repositories.RepositoryException;
 import data.orm.Student;
 import data.orm.Subject;
 
@@ -65,7 +66,14 @@ public class TestSubjectsRepository implements ISubjectsRepository {
 	@Override
 	public void update(Subject obj) {
 		Subject sub = this.getByID(obj.getID());
-		sub.setSubjName(obj.getSubjName());
+		sub.setDb(null);
+		try {
+			sub.setSubjName(obj.getSubjName());
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sub.setDb(db);
 	}
 	
 	@Override

@@ -1,5 +1,7 @@
 package data.orm;
 
+import data.contracts.repositories.RepositoryException;
+
 public class Mark extends ORMObject {
 	private int ID;
 	private int Mark;
@@ -28,8 +30,12 @@ public class Mark extends ORMObject {
 		return Mark;
 	}
 
-	public void setMark(int mark) {
+	public void setMark(int mark)  throws RepositoryException{
 		Mark = mark;
+		if(this.db != null){
+			this.db.getStudents().updateMark(this);
+		}
+	
 	}
 
 	public int getStudent_id() {

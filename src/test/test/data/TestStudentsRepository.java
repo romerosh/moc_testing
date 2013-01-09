@@ -23,8 +23,7 @@ public class TestStudentsRepository implements IStudentsRepository {
 
 	@Override
 	public Collection<Student> getAll() {
-		// TODO Auto-generated method stub
-		return students;
+			return students;
 	}
 
 	@Override
@@ -67,7 +66,14 @@ public class TestStudentsRepository implements IStudentsRepository {
 	@Override
 	public void update(Student obj) {
 		Student st = this.getByID(obj.getID());
-		st.setName(obj.getName());
+		st.setDb(null);
+		try {
+			st.setName(obj.getName());
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		st.setDb(this.db);
 	}
 
 
@@ -133,6 +139,12 @@ public class TestStudentsRepository implements IStudentsRepository {
 	@Override
 	public Collection<Mark> GetAllMarks() throws RepositoryException {
 		return marks;
+	}
+
+	@Override
+	public void updateMark(Mark mark) throws RepositoryException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -12,13 +12,12 @@ import data.contracts.repositories.RepositoryException;
 import data.db.DataBaseService;
 import data.db.IDBConnectionFactory;
 import data.db.Repository;
-import data.orm.Group;
 import data.orm.Mark;
 import data.orm.ORMObjectException;
 import data.orm.Student;
 
-public class StudentsRepository extends Repository implements IStudentsRepository
-{
+public class StudentsRepository extends Repository implements
+		IStudentsRepository {
 
 	public StudentsRepository(DataBaseService dataBaseService,
 			IDBConnectionFactory connectionFactory) {
@@ -28,7 +27,7 @@ public class StudentsRepository extends Repository implements IStudentsRepositor
 	@Override
 	public Collection<Student> getAll() throws RepositoryException {
 		Connection c = super.getConnection();
-		Collection <Student> students = null;
+		Collection<Student> students = null;
 		try {
 			String query = "select * from students;";
 			PreparedStatement ps = c.prepareStatement(query);
@@ -101,7 +100,7 @@ public class StudentsRepository extends Repository implements IStudentsRepositor
 			super.throwable(e, RepositoryException.err_enum.c_sql_err);
 		} finally {
 			super.closeConnection(c);
-		}	
+		}
 	}
 
 	@Override
@@ -118,7 +117,7 @@ public class StudentsRepository extends Repository implements IStudentsRepositor
 		} finally {
 			super.closeConnection(c);
 		}
-		
+
 	}
 
 	@Override
@@ -136,13 +135,14 @@ public class StudentsRepository extends Repository implements IStudentsRepositor
 			super.throwable(e, RepositoryException.err_enum.c_sql_err);
 		} finally {
 			super.closeConnection(c);
-		}	
+		}
 	}
 
 	@Override
-	public Collection<Mark> GetMarks(Student student) throws RepositoryException {
+	public Collection<Mark> GetMarks(Student student)
+			throws RepositoryException {
 		Connection c = super.getConnection();
-		Collection <Mark> marks = null;
+		Collection<Mark> marks = null;
 		try {
 			String query = "select * from marks where student_id = ?;";
 			PreparedStatement ps = c.prepareStatement(query);
@@ -185,7 +185,7 @@ public class StudentsRepository extends Repository implements IStudentsRepositor
 		} finally {
 			super.closeConnection(c);
 		}
-		
+
 	}
 
 	@Override
@@ -202,11 +202,12 @@ public class StudentsRepository extends Repository implements IStudentsRepositor
 		} finally {
 			super.closeConnection(c);
 		}
-		
+
 	}
 
 	@Override
-	public double getAverageMark(Student student) throws ORMObjectException, RepositoryException {
+	public double getAverageMark(Student student) throws ORMObjectException,
+			RepositoryException {
 		Connection c = super.getConnection();
 		double avg = 0.0;
 		try {
@@ -281,6 +282,25 @@ public class StudentsRepository extends Repository implements IStudentsRepositor
 			super.closeConnection(c);
 		}
 		return marks;
+	}
+
+	@Override
+	public void updateMark(Mark mark) throws RepositoryException {
+		Connection c = super.getConnection();
+		try {
+			String query = "update mars set mark = ?, student_id = ?, subject_id where id = ?;";
+			PreparedStatement ps = c.prepareStatement(query);
+			ps.setInt(1, mark.getMark());
+			ps.setInt(2, mark.getStudent_id());
+			ps.setInt(3, mark.getSubject_id());
+			ps.setInt(4, mark.getID());
+			ps.execute();
+			super.commit(c);
+		} catch (SQLException e) {
+			super.throwable(e, RepositoryException.err_enum.c_sql_err);
+		} finally {
+			super.closeConnection(c);
+		}
 	}
 
 }

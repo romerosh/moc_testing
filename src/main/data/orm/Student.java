@@ -9,6 +9,7 @@ public class Student extends ORMObject {
 	private int ID;
 	private String Name;
 	private String Surname;
+
 	public Student() {
 
 	}
@@ -30,23 +31,31 @@ public class Student extends ORMObject {
 		return Name;
 	}
 
-	public void setName(String name) {
+	public void setName(String name) throws RepositoryException {
 		Name = name;
+		if (this.db != null) {
+			this.db.getStudents().update(this);
+		}
 	}
 
 	public String getSurname() {
 		return Surname;
 	}
 
-	public void setSurname(String surname) {
+	public void setSurname(String surname) throws RepositoryException {
 		Surname = surname;
+		if (this.db != null) {
+			this.db.getStudents().update(this);
+		}
 	}
 
-	public double getAverage_Mark() throws ORMObjectException, RepositoryException {
+	public double getAverage_Mark() throws ORMObjectException,
+			RepositoryException {
 		return this.db.getStudents().getAverageMark(this);
 	}
 
-	public Collection<Mark> GetMarks() throws ORMObjectException, RepositoryException {
+	public Collection<Mark> GetMarks() throws ORMObjectException,
+			RepositoryException {
 		if (this.db != null) {
 			return this.db.getStudents().GetMarks(this);
 		} else
@@ -55,10 +64,11 @@ public class Student extends ORMObject {
 
 	}
 
-	public Mark AddMark(Subject s, int mark) throws ORMObjectException, RepositoryException {
+	public Mark AddMark(Subject s, int mark) throws ORMObjectException,
+			RepositoryException {
 
 		if (this.db != null) {
-			return ORMObjectFactory.createMarkObj(db,s,this,mark);
+			return ORMObjectFactory.createMarkObj(db, s, this, mark);
 		}
 
 		else
@@ -66,11 +76,11 @@ public class Student extends ORMObject {
 					"This student was not linked with repository");
 	}
 
-	public void RemoveMark(Mark mark) throws ORMObjectException, RepositoryException {
+	public void RemoveMark(Mark mark) throws ORMObjectException,
+			RepositoryException {
 		if (this.db != null) {
-		this.db.getStudents().remove(mark.getID());
-		}
-		else
+			this.db.getStudents().remove(mark.getID());
+		} else
 			throw new ORMObjectException(
 					"This student was not linked with repository");
 	}

@@ -55,11 +55,6 @@ public class Main {
 			IDBConnectionFactory connectionFactory = getDBConnectionFactory();
 			db = new DataBaseService(connectionFactory);
 
-			// Add new groups//
-			/*
-			 * for (int i=0; i<23; i++) { //db.getStudents().remove(i);
-			 * //db.getGroups().remove(i); db.getSubjects().remove(i); }
-			 */
 			while (true) {
 
 				System.out.print("Command> ");
@@ -206,7 +201,7 @@ public class Main {
 					continue;
 				}
 
-				if (cmd.equals("add_stud_in_group") == true) {
+				if (cmd.equals("add_stud_to_group") == true) {
 					try {
 						System.out.print("Enter group:   ");
 						String gr = inp.nextLine();
