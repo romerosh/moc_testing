@@ -1,15 +1,17 @@
 package log.appenders.file;
 
+import helpers.FileHelper;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-
 public class FileManager implements IFileManager {
 
 	private PrintWriter writer = null;
-	private String fileName;
+	private String fileName = null;
+	private Date creationFileTime = null;
 
 	public FileManager() {
 
@@ -42,7 +44,6 @@ public class FileManager implements IFileManager {
 		}
 	}
 
-
 	@Override
 	public void writeln(String message) {
 		if (writer != null) {
@@ -53,19 +54,44 @@ public class FileManager implements IFileManager {
 
 	@Override
 	public Date getFileCreationTime() {
-		// TODO Auto-generated method stub
-		return null;
+		if (creationFileTime == null)
+			creationFileTime = FileHelper.getCreationFileTime(this.fileName);
+		return creationFileTime;
 	}
 
 	@Override
 	public void setFile(String fileName) {
 		this.fileName = fileName;
+		this.creationFileTime = null;
 	}
 
 	@Override
 	public String getFileName() {
 
 		return this.fileName;
+	}
+
+	@Override
+	public boolean isExist() {
+		if (this.fileName == null)
+			return false;
+		File file = new File(this.fileName);
+
+		return file.canWrite();
+	}
+
+	@Override
+	public boolean createIfNotExist() {
+		if (isExist() == true)
+			return true;
+		
+		return FileHelper.createNewFile(this.fileName);
+	}
+
+	@Override
+	public String getFileNameWithoutExp() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

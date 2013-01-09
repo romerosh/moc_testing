@@ -6,6 +6,8 @@ public interface IFileManager {
 
 	void setFile(String fileName);
 
+	boolean isExist();
+
 	boolean open();
 
 	void close();
@@ -13,6 +15,9 @@ public interface IFileManager {
 	void writeln(String message);
 
 	Date getFileCreationTime();
-	
+
 	String getFileName();
+
+	String getFileNameWithoutExp();
+	boolean createIfNotExist();
 }

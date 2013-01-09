@@ -12,7 +12,7 @@ import java.util.Date;
 public class FileHelper {
 
 	public static Date getCreationFileTime(String fileName) {
-		if(fileName==null)
+		if (fileName == null)
 			return null;
 		try {
 			File f = new File(fileName);
@@ -27,13 +27,22 @@ public class FileHelper {
 		}
 		return null;
 	}
-	
-	public static void renameFile(String oldName, String newName){
-		
+
+	public static boolean renameFile(String oldName, String newName) {
+		File file = new File(oldName);
+		return file.renameTo(new File(newName));
 	}
 
-	public static void createNewFile(String fileName) {
-		// TODO Auto-generated method stub
-		
+	public static boolean createNewFile(String fileName) {
+		File file = new File(fileName);
+		boolean result = false;
+
+		try {
+			result = file.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return result;
 	}
 }

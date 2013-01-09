@@ -40,11 +40,11 @@ public class Main {
 		List<MessageType> msgTypes = Arrays.asList(MessageType.INFO,
 				MessageType.ERROR, MessageType.WARN);
 		FileAppender fileAppender = new FileAppender();
-		fileAppender.setFile(new FileManager("logs/lab5.log"));
+		fileAppender.setFile(new FileManager("lab5.log"));
 
 		SimpleLoggerProvider logProvider = new SimpleLoggerProvider();
 
-		logProvider.addAppenderForMsgTypes(fileAppender, msgTypes);
+		//logProvider.addAppenderForMsgTypes(fileAppender, msgTypes);
 		return logProvider;
 	}
 
@@ -63,7 +63,7 @@ public class Main {
 			 */
 			while (true) {
 
-				System.out.println("Enter cmd: ");
+				System.out.print("Command> ");
 				String cmd = inp.nextLine();
 				if (cmd.equals("add_group") == true) {
 					try {
@@ -76,6 +76,7 @@ public class Main {
 						System.out.print("failed.\n");
 					}
 				}
+				
 				if (cmd.equals("get_groups") == true) {
 					try {
 						System.out.print("----" + "  " + "Groups" + "  "

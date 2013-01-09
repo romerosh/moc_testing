@@ -28,9 +28,17 @@ public class FileAppender implements ILogAppender {
 				- fileManager.getFileCreationTime().getTime() > MSecsInDay;
 	}
 
+	@SuppressWarnings("deprecation")
 	protected void storage(Date currentTime) {
 		fileManager.close();
 		StringBuilder newFileName = new StringBuilder();
+		newFileName.append(fileManager.getFileName());
+		newFileName.append(".");
+		newFileName.append(Integer.toString(currentTime.getDay()));
+		newFileName.append(".");
+		newFileName.append(Integer.toString(currentTime.getMonth()));
+		newFileName.append(".");
+		newFileName.append(Integer.toString(currentTime.getYear()));
 		FileHelper
 				.renameFile(fileManager.getFileName(), newFileName.toString());
 		FileHelper.createNewFile(fileManager.getFileName());
@@ -41,6 +49,7 @@ public class FileAppender implements ILogAppender {
 		if (fileManager != null) {
 			try {
 				this.fileManager = fileManager;
+				this.fileManager.createIfNotExist();
 				Date currentTime = getCurrentDate();
 				if (this.isStorage(currentTime)) {
 					this.storage(currentTime);
