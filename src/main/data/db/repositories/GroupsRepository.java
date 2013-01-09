@@ -254,9 +254,9 @@ public class GroupsRepository extends Repository implements IGroupsRepository {
 			if (key.next()) {
 				int id = key.getInt("id");
 				group.setID(id);
-				//student.setID(id);
+				student.setID(id);
 				group.setDb(dataBaseService);
-				//student.setDb(dataBaseService);
+				student.setDb(dataBaseService);
 			}
 			super.commit(c);
 		} catch (SQLException e) {

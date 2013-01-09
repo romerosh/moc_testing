@@ -11,6 +11,7 @@ import data.db.IDBConnectionFactory;
 import data.db.impl.DBConnectionFactory;
 import data.db.impl.PGDataSource;
 import data.orm.Group;
+import data.orm.Mark;
 import data.orm.ORMObjectException;
 import data.orm.Student;
 import data.orm.Subject;
@@ -135,11 +136,155 @@ public class Main {
 					}
 			}
 
+			if (cmd.equals("remove_group") == true) {
+				try{
+					System.out.print("Enter group:   ");
+					String gr = inp.nextLine();
+					//Group en_group = new Group (gr);
+					Group group  = db.getGroups().getByName(gr);
+					db.getGroups().remove(group.getID());
+					System.out.print("ok\n");
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
+			}
+			
+			if (cmd.equals("update_group") == true) {
+				try{
+					System.out.print("Enter old group:   ");
+					String old_gr = inp.nextLine();
+					//Group en_group = new Group (gr);
+					Group old_group  = db.getGroups().getByName(old_gr);
+					System.out.print("Enter new group:   ");
+					String new_gr = inp.nextLine();
+					Group new_group  = db.getGroups().getByName(new_gr);
+					old_group = new_group;
+					db.getGroups().update(old_group);
+					System.out.print("ok\n");
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
+			}
+			
+			if (cmd.equals("get_group_info") == true) {
+				try{
+					System.out.print("Enter group:   ");
+					String gr = inp.nextLine();
+					Group group  = db.getGroups().getByName(gr);
+					System.out.print("id" + "  " + " |" + "  " + "Name " + "\n");
+					System.out.print(group.getID() + "  " + " |" + "  "
+							+ group.getName() + "\n");
+					System.out.print("ok\n");
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
+			}
+			
+			if (cmd.equals("add_stud_in_group") == true) {
+				try{
+					System.out.print("Enter group:   ");
+					String gr = inp.nextLine();
+					Group group  = db.getGroups().getByName(gr);
+					System.out.print("Student name:   ");
+					String stud_name = inp.nextLine();
+					System.out.print("Student surname:   ");
+					String stud_surname = inp.nextLine();
+					Student student = db.getStudents().getByName(stud_name, stud_surname);
+					db.getGroups().addStudent(group, student);					
+					System.out.print(db.getGroups().getByID(group.getID()) + "    "+ db.getStudents().getByID(student.getID()));
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
+			}
+			
+			if (cmd.equals("remove_stud") == true) {
+				try{
+					System.out.print("Student name:   ");
+					String stud_name = inp.nextLine();
+					System.out.print("Student surname:   ");
+					String stud_surname = inp.nextLine();
+					Student student = new Student(stud_name, stud_surname);
+					Collection<Student> students = db.getStudents().getAll();
+					for (Student st : students) {
+				if (st.getName()==student.getName() && st.getSurname()==student.getSurname())
+				{
+					db.getStudents().remove(student.getID());
+					System.out.print("ok\n");
+				}
+				else {
+					System.out.print("Student was not faund\n");
+					}
+					}
+
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
+			}
+			if (cmd.equals("remove_subj") == true) {
+				try{
+					System.out.print("Enter subject:   ");
+					String sub = inp.nextLine();
+					Subject subject  = db.getSubjects().getSubjectByName(sub);
+					db.getSubjects().remove(subject.getID());
+					System.out.print("ok\n");
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
+			}
+			
 			if (cmd.equals("add_mark") == true) {
 				try{
-				System.out.print("Enter mark:   ");
-				int m = inp.nextInt();
-				// Mark mark = new Mark (m,)
+					System.out.print("Student name:   ");
+					String stud_name = inp.nextLine();
+					System.out.print("Student surname:   ");
+					String stud_surname = inp.nextLine();
+					Student student  = db.getStudents().getByName(stud_name, stud_surname);
+					System.out.print("Subject name:   ");
+					String subj = inp.nextLine();
+					Subject subject  = db.getSubjects().getSubjectByName(subj);
+					Mark mark = new Mark (db.getSubjects().getByID(subject.getID()), db.getStudents().getByID(student.getID()),5);
+					db.getStudents().AddMark(mark);
+					System.out.print("ok\n");
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
+			}
+			
+			if (cmd.equals("remove_mark") == true) {
+				try{
+					System.out.print("Student name:   ");
+					String stud_name = inp.nextLine();
+					System.out.print("Student surname:   ");
+					String stud_surname = inp.nextLine();
+					Student student  = db.getStudents().getByName(stud_name, stud_surname);
+					System.out.print("Subject name:   ");
+					String subj = inp.nextLine();
+					Subject subject  = db.getSubjects().getSubjectByName(subj);
+					//System.out.print(mark.getID());
+					//db.getStudents().RemoveMark(mark.getID());
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
+			}
+			
+			if (cmd.equals("get_marks") == true) {
+				try{
+				System.out.print("----" + "  " + "Marks" + "  " + "----"
+						+ "\n");
+				System.out.print("id" + "  " + " |" + "  " + "Name " + "\n");
+				Collection<Mark> marks = db.getStudents().GetAllMarks();
+				for (Mark m : marks) {
+					System.out.print(m.getStudent_id());
+				}
+				System.out.print("ok" + "\n");
 				}
 				 catch (Exception e) {
 						System.out.print("failed.\n");
@@ -147,49 +292,6 @@ public class Main {
 			}
 
 		}
-		/*
-		 * 
-		 * System.out.print(">cmd" + "  " + "'Add groups'"+ "\n");
-		 * System.out.print("ok" + "\n"); System.out.print(">cmd" + "  " +
-		 * "'Get group'" + "\n"); System.out.print("----" + "  " + "Groups"+
-		 * "  " + "----" + "\n"); System.out.print("id"+ "  "+ " |" + "  " +
-		 * "Name " + "\n"); db.getGroups().insert(group1);
-		 * db.getGroups().insert(group2); db.getGroups().insert(group3); //
-		 * Group gr = db.getGroups().getByName("IF-57A"); //
-		 * gr.setName("If59a"); Collection<Group> groups =
-		 * db.getGroups().getAll(); for (Group g : groups) {
-		 * //db.getGroups().remove(g.getID()); System.out.print(g.getID()+ "  "+
-		 * " |" + "  " + g.getName()+ "\n"); } System.out.print("ok" + "\n");
-		 */
-
-		// Remove group//
-
-		/*
-		 * Subject subject1 = new Subject("English"); Subject subject2 = new
-		 * Subject("matan"); db.getSubjects().insert(subject1);
-		 * db.getSubjects().insert(subject2); //db.getSubjects().remove(4);
-		 * System.out.println(db.getSubjects().getByID(3));
-		 * System.out.println(db.getSubjects().getSubjectByName("matan"));
-		 * Collection<Subject> subjects = db.getSubjects().getAll(); for
-		 * (Subject sub : subjects) { System.out.println(sub.toString()); }
-		 * 
-		 * Student student1 = new Student ("Marianna", "Roshchenko"); Student
-		 * student2 = new Student ("Rusya", "Grechka");
-		 * db.getStudents().insert(student1); db.getStudents().insert(student2);
-		 * System.out.println(db.getStudents().getByID(2)); //Mark mark = new
-		 * Mark (subject1.getID(),student1.getID(),5);
-		 * //db.getStudents().AddMark(mark); // db.getStudents().remove(2);
-		 * Collection<Student> students = db.getStudents().getAll(); for
-		 * (Student st : students) { System.out.println(st.toString()); }
-		 * 
-		 * 
-		 * 
-		 * //db.getGroups().addStudent(group, student1); Group group1 =
-		 * db.getGroups().getByName("IF36d"); Student st =
-		 * db.getStudents().getByID(1); group1.addStudent(st);
-		 */
-
-		// System.out.println("Finished.");
 
 	}
 
