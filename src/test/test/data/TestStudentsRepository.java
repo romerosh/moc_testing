@@ -6,6 +6,7 @@ import java.util.Collection;
 import data.contracts.IDataBaseService;
 import data.contracts.repositories.IStudentsRepository;
 import data.contracts.repositories.RepositoryException;
+import data.orm.Group;
 import data.orm.Mark;
 import data.orm.ORMObjectException;
 import data.orm.Student;
@@ -103,8 +104,8 @@ public class TestStudentsRepository implements IStudentsRepository {
 	}
 
 	@Override
-	public void RemoveMark(Mark mark) {
-		marks.remove(getByID(mark.getID()));
+	public void RemoveMark(int ID) {
+		marks.remove(getByID(ID));
 
 	}
 
@@ -117,6 +118,21 @@ public class TestStudentsRepository implements IStudentsRepository {
 			avg += m.getMark();
 		}
 		return avg/marks.size();
+	}
+
+	@Override
+	public Student getByName(String name, String surname)
+			throws RepositoryException {
+		for (Student st : students) {
+			if (st.getName().equals(name) && st.getName().equals(surname))
+				return st;
+		}
+		return null;
+	}
+
+	@Override
+	public Collection<Mark> GetAllMarks() throws RepositoryException {
+		return marks;
 	}
 
 }

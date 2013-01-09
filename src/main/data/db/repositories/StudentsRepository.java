@@ -12,6 +12,7 @@ import data.contracts.repositories.RepositoryException;
 import data.db.DataBaseService;
 import data.db.IDBConnectionFactory;
 import data.db.Repository;
+import data.orm.Group;
 import data.orm.Mark;
 import data.orm.ORMObjectException;
 import data.orm.Student;
@@ -190,12 +191,12 @@ public class StudentsRepository extends Repository implements IStudentsRepositor
 	}
 
 	@Override
-	public void RemoveMark(Mark mark) throws RepositoryException {
+	public void RemoveMark(int ID) throws RepositoryException {
 		Connection c = super.getConnection();
 		try {
 			String query = "delete from marks where id = ?;";
 			PreparedStatement ps = c.prepareStatement(query);
-			ps.setInt(1, mark.getID());
+			ps.setInt(1, ID);
 			ps.execute();
 			super.commit(c);
 		} catch (SQLException e) {
@@ -225,6 +226,63 @@ public class StudentsRepository extends Repository implements IStudentsRepositor
 			super.closeConnection(c);
 		}
 		return avg;
+	}
+
+	@Override
+	public Student getByName(String name, String surname)
+			throws RepositoryException {
+		Connection c = super.getConnection();
+		Student student = null;
+
+		try {
+			String query = "select * from students where name = ? AND surname = ?;";
+			PreparedStatement ps = c.prepareStatement(query);
+			ps.setString(1, name);
+			ps.setString(2, surname);
+			ResultSet key = ps.executeQuery();
+			if (key.next()) {
+				student = new Student();
+				int id = key.getInt("id");
+				student.setID(id);
+				student.setName(name);
+				student.setName(surname);
+				student.setDb(dataBaseService);
+			}
+		} catch (SQLException e) {
+			super.throwable(e, RepositoryException.err_enum.c_sql_err);
+		} finally {
+			super.closeConnection(c);
+		}
+		return student;
+	}
+
+	@Override
+	public Collection<Mark> GetAllMarks() throws RepositoryException {
+		Connection c = super.getConnection();
+		Collection<Mark> marks = null;
+
+		try {
+			String query = "select * from marks;";
+			PreparedStatement ps = c.prepareStatement(query);
+			ResultSet key = ps.executeQuery();
+			marks = new ArrayList<Mark>();
+			while (key.next()) {
+
+				Mark mark = new Mark();
+				int id = key.getInt("id");
+				mark.setID(id);
+				mark.setMark(mark.getID());
+				mark.setStudent_id(mark.getStudent_id());
+				mark.setSubject_id(mark.getSubject_id());
+				mark.setDb(dataBaseService);
+				marks.add(mark);
+			}
+		} catch (SQLException e) {
+			super.throwable(e, RepositoryException.err_enum.c_sql_err);
+		} finally {
+			super.closeConnection(c);
+		}
+		return marks;
 	}
 
 }
