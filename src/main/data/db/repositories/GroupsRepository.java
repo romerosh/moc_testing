@@ -254,14 +254,7 @@ public class GroupsRepository extends Repository implements IGroupsRepository {
 			PreparedStatement ps = c.prepareStatement(query);
 			ps.setInt(1, group.getID());
 			ps.setInt(2, student.getID());
-			ResultSet key = ps.executeQuery();
-			if (key.next()) {
-				int id = key.getInt("id");
-				group.setID(id);
-				student.setID(id);
-				group.setDb(dataBaseService);
-				student.setDb(dataBaseService);
-			}
+			ps.execute();
 			super.commit(c);
 		} catch (SQLException e) {
 			super.throwable(e, RepositoryException.err_enum.c_sql_err);

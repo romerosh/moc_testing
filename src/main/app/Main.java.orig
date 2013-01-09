@@ -1,11 +1,14 @@
 package app;
 
 import java.io.Console;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
+import log.ILogger;
 import log.ILoggerProvider;
 import log.MessageType;
 import log.SimpleLoggerFactory;
@@ -55,12 +58,6 @@ public class Main {
 			SimpleLoggerFactory.Initialize(prepareLogProvider());
 			IDBConnectionFactory connectionFactory = getDBConnectionFactory();
 			db = new DataBaseService(connectionFactory);
-
-			// Add new groups//
-			/*
-			 * for (int i=0; i<23; i++) { //db.getStudents().remove(i);
-			 * //db.getGroups().remove(i); db.getSubjects().remove(i); }
-			 */
 			while (true) {
 
 				System.out.println("Enter cmd: ");
@@ -150,161 +147,167 @@ public class Main {
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
-				}
+<<<<<<< HEAD
+=======
+			}
 
-				if (cmd.equals("remove_group") == true) {
-					try {
-						System.out.print("Enter group:   ");
-						String gr = inp.nextLine();
-						// Group en_group = new Group (gr);
-						Group group = db.getGroups().getByName(gr);
-						db.getGroups().remove(group.getID());
-						System.out.print("ok\n");
-					} catch (Exception e) {
+			if (cmd.equals("remove_group") == true) {
+				try{
+					System.out.print("Enter group:   ");
+					String gr = inp.nextLine();
+					//Group en_group = new Group (gr);
+					Group group  = db.getGroups().getByName(gr);
+					db.getGroups().remove(group.getID());
+					System.out.print("ok\n");
+				}
+				 catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+			}
+			
+			if (cmd.equals("update_group") == true) {
+				try{
+					System.out.print("Enter old group:   ");
+					String old_gr = inp.nextLine();
+					//Group en_group = new Group (gr);
+					Group old_group  = db.getGroups().getByName(old_gr);
+					System.out.print("Enter new group:   ");
+					String new_gr = inp.nextLine();
+					Group new_group  = db.getGroups().getByName(new_gr);
+					old_group = new_group;
+					db.getGroups().update(old_group);
+					System.out.print("ok\n");
 				}
-
-				if (cmd.equals("update_group") == true) {
-					try {
-						System.out.print("Enter old group:   ");
-						String old_gr = inp.nextLine();
-						// Group en_group = new Group (gr);
-						Group old_group = db.getGroups().getByName(old_gr);
-						System.out.print("Enter new group:   ");
-						String new_gr = inp.nextLine();
-						Group new_group = db.getGroups().getByName(new_gr);
-						old_group = new_group;
-						db.getGroups().update(old_group);
-						System.out.print("ok\n");
-					} catch (Exception e) {
+				 catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+			}
+			
+			if (cmd.equals("get_group_info") == true) {
+				try{
+					System.out.print("Enter group:   ");
+					String gr = inp.nextLine();
+					Group group  = db.getGroups().getByName(gr);
+					System.out.print("id" + "  " + " |" + "  " + "Name " + "\n");
+					System.out.print(group.getID() + "  " + " |" + "  "
+							+ group.getName() + "\n");
+					System.out.print("ok\n");
 				}
-
-				if (cmd.equals("get_group_info") == true) {
-					try {
-						System.out.print("Enter group:   ");
-						String gr = inp.nextLine();
-						Group group = db.getGroups().getByName(gr);
-						System.out.print("id" + "  " + " |" + "  " + "Name "
-								+ "\n");
-						System.out.print(group.getID() + "  " + " |" + "  "
-								+ group.getName() + "\n");
-						System.out.print("ok\n");
-					} catch (Exception e) {
+				 catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+			}
+			
+			if (cmd.equals("add_stud_in_group") == true) {
+				try{
+					System.out.print("Enter group:   ");
+					String gr = inp.nextLine();
+					Group group  = db.getGroups().getByName(gr);
+					System.out.print("Student name:   ");
+					String stud_name = inp.nextLine();
+					System.out.print("Student surname:   ");
+					String stud_surname = inp.nextLine();
+					Student student = db.getStudents().getByName(stud_name, stud_surname);
+					db.getGroups().addStudent(group, student);					
+					System.out.print(db.getGroups().getByID(group.getID()) + "    "+ db.getStudents().getByID(student.getID()));
 				}
-
-				if (cmd.equals("add_stud_in_group") == true) {
-					try {
-						System.out.print("Enter group:   ");
-						String gr = inp.nextLine();
-						Group group = db.getGroups().getByName(gr);
-						System.out.print("Student name:   ");
-						String stud_name = inp.nextLine();
-						System.out.print("Student surname:   ");
-						String stud_surname = inp.nextLine();
-						Student student = db.getStudents().getByName(stud_name,
-								stud_surname);
-						group.addStudent( student);
-						System.out.print(db.getGroups().getByID(group.getID())
-								+ "    "
-								+ db.getStudents().getByID(student.getID()));
-					} catch (Exception e) {
+				 catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+			}
+			
+			if (cmd.equals("remove_stud") == true) {
+				try{
+					System.out.print("Student name:   ");
+					String stud_name = inp.nextLine();
+					System.out.print("Student surname:   ");
+					String stud_surname = inp.nextLine();
+					Student student = new Student(stud_name, stud_surname);
+					Collection<Student> students = db.getStudents().getAll();
+					for (Student st : students) {
+				if (st.getName()==student.getName() && st.getSurname()==student.getSurname())
+				{
+					db.getStudents().remove(student.getID());
+					System.out.print("ok\n");
 				}
+				else {
+					System.out.print("Student was not faund\n");
+					}
+					}
 
-				if (cmd.equals("remove_stud") == true) {
-					try {
-						System.out.print("Student name:   ");
-						String stud_name = inp.nextLine();
-						System.out.print("Student surname:   ");
-						String stud_surname = inp.nextLine();
-						Student student = new Student(stud_name, stud_surname);
-						Collection<Student> students = db.getStudents()
-								.getAll();
-						for (Student st : students) {
-							if (st.getName() == student.getName()
-									&& st.getSurname() == student.getSurname()) {
-								db.getStudents().remove(student.getID());
-								System.out.print("ok\n");
-							} else {
-								System.out.print("Student was not faund\n");
-							}
-						}
-
-					} catch (Exception e) {
+				}
+				 catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+			}
+			if (cmd.equals("remove_subj") == true) {
+				try{
+					System.out.print("Enter subject:   ");
+					String sub = inp.nextLine();
+					Subject subject  = db.getSubjects().getSubjectByName(sub);
+					db.getSubjects().remove(subject.getID());
+					System.out.print("ok\n");
 				}
-				if (cmd.equals("remove_subj") == true) {
-					try {
-						System.out.print("Enter subject:   ");
-						String sub = inp.nextLine();
-						Subject subject = db.getSubjects()
-								.getSubjectByName(sub);
-						db.getSubjects().remove(subject.getID());
-						System.out.print("ok\n");
-					} catch (Exception e) {
+				 catch (Exception e) {
 						System.out.print("failed.\n");
 					}
+			}
+			
+			if (cmd.equals("add_mark") == true) {
+				try{
+					System.out.print("Student name:   ");
+					String stud_name = inp.nextLine();
+					System.out.print("Student surname:   ");
+					String stud_surname = inp.nextLine();
+					Student student  = db.getStudents().getByName(stud_name, stud_surname);
+					System.out.print("Subject name:   ");
+					String subj = inp.nextLine();
+					Subject subject  = db.getSubjects().getSubjectByName(subj);
+					Mark mark = new Mark (db.getSubjects().getByID(subject.getID()), db.getStudents().getByID(student.getID()),5);
+					db.getStudents().AddMark(mark);
+					System.out.print("ok\n");
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
+			}
+			
+			if (cmd.equals("remove_mark") == true) {
+				try{
+					System.out.print("Student name:   ");
+					String stud_name = inp.nextLine();
+					System.out.print("Student surname:   ");
+					String stud_surname = inp.nextLine();
+					Student student  = db.getStudents().getByName(stud_name, stud_surname);
+					System.out.print("Subject name:   ");
+					String subj = inp.nextLine();
+					Subject subject  = db.getSubjects().getSubjectByName(subj);
+					//System.out.print(mark.getID());
+					//db.getStudents().RemoveMark(mark.getID());
+				}
+				 catch (Exception e) {
+						System.out.print("failed.\n");
+					}
+			}
+			
+			if (cmd.equals("get_marks") == true) {
+				try{
+				System.out.print("----" + "  " + "Marks" + "  " + "----"
+						+ "\n");
+				System.out.print("id" + "  " + " |" + "  " + "Name " + "\n");
+				Collection<Mark> marks = db.getStudents().GetAllMarks();
+				for (Mark m : marks) {
+					System.out.print(m.getStudent_id());
+				}
+				System.out.print("ok" + "\n");
+>>>>>>> 5d3d2624f5df58cd2db8cbd9b169ba44a96eb346
 				}
 
 				if (cmd.equals("add_mark") == true) {
 					try {
-						System.out.print("Student name:   ");
-						String stud_name = inp.nextLine();
-						System.out.print("Student surname:   ");
-						String stud_surname = inp.nextLine();
-						Student student = db.getStudents().getByName(stud_name,
-								stud_surname);
-						System.out.print("Subject name:   ");
-						String subj = inp.nextLine();
-						Subject subject = db.getSubjects().getSubjectByName(
-								subj);
-						Mark mark = new Mark(db.getSubjects().getByID(
-								subject.getID()), db.getStudents().getByID(
-								student.getID()), 5);
-						db.getStudents().AddMark(mark);
-						System.out.print("ok\n");
-					} catch (Exception e) {
-						System.out.print("failed.\n");
-					}
-				}
-
-				if (cmd.equals("remove_mark") == true) {
-					try {
-						System.out.print("Student name:   ");
-						String stud_name = inp.nextLine();
-						System.out.print("Student surname:   ");
-						String stud_surname = inp.nextLine();
-						Student student = db.getStudents().getByName(stud_name,
-								stud_surname);
-						System.out.print("Subject name:   ");
-						String subj = inp.nextLine();
-						Subject subject = db.getSubjects().getSubjectByName(
-								subj);
-						// System.out.print(mark.getID());
-						// db.getStudents().RemoveMark(mark.getID());
-					} catch (Exception e) {
-						System.out.print("failed.\n");
-					}
-				}
-
-				if (cmd.equals("get_marks") == true) {
-					try {
-						System.out.print("----" + "  " + "Marks" + "  "
-								+ "----" + "\n");
-						System.out.print("id" + "  " + " |" + "  " + "Name "
-								+ "\n");
-						Collection<Mark> marks = db.getStudents().GetAllMarks();
-						for (Mark m : marks) {
-							System.out.print(m.getStudent_id());
-						}
-						System.out.print("ok" + "\n");
+						System.out.print("Enter mark:   ");
+						int m = inp.nextInt();
+						// Mark mark = new Mark (m,)
 					} catch (Exception e) {
 						System.out.print("failed.\n");
 					}
@@ -312,12 +315,12 @@ public class Main {
 
 			}
 		} catch (Exception e) {
-
 			e.printStackTrace();
 			return;
 		} finally {
 			SimpleLoggerFactory.Dispose();
 		}
+
 	}
 
 }
