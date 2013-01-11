@@ -43,7 +43,7 @@ public class Main {
 
 		SimpleLoggerProvider logProvider = new SimpleLoggerProvider();
 
-		//logProvider.addAppenderForMsgTypes(fileAppender, msgTypes);
+		// logProvider.addAppenderForMsgTypes(fileAppender, msgTypes);
 		return logProvider;
 	}
 
@@ -71,7 +71,7 @@ public class Main {
 					}
 					continue;
 				}
-				
+
 				if (cmd.equals("get_groups") == true) {
 					try {
 						System.out.print("----" + "  " + "Groups" + "  "
@@ -109,8 +109,7 @@ public class Main {
 								+ "--------" + "\n");
 						System.out.print("id" + "  " + " |" + "  " + "Name "
 								+ "  " + " |" + " Surname" + "\n");
-						Collection<Student> students = db.Students()
-								.getAll();
+						Collection<Student> students = db.Students().getAll();
 						for (Student st : students) {
 							System.out.print(st.getID() + "  " + " |" + "  "
 									+ st.getName() + " |" + st.getSurname()
@@ -140,8 +139,7 @@ public class Main {
 								+ "----" + "\n");
 						System.out.print("id" + "  " + " |" + "  " + "Name "
 								+ "\n");
-						Collection<Subject> subjects = db.Subjects()
-								.getAll();
+						Collection<Subject> subjects = db.Subjects().getAll();
 						for (Subject subj : subjects) {
 							System.out.print(subj.getID() + "  " + " |" + "  "
 									+ subj.getSubjName() + "\n");
@@ -207,7 +205,7 @@ public class Main {
 						System.out.print("Enter group:   ");
 						String gr = inp.nextLine();
 						Group group = db.Groups().getByName(gr);
-						if(group == null){
+						if (group == null) {
 							System.out.print("Faied! The group was not found");
 							continue;
 						}
@@ -218,9 +216,11 @@ public class Main {
 						student.setName(stud_name);
 						student.setSurname(stud_surname);
 						group.addStudent(student);
-						/*System.out.print(db.getGroups().getByID(group.getID())
-								+ "    "
-								+ db.getStudents().getByID(student.getID()));*/
+						/*
+						 * System.out.print(db.getGroups().getByID(group.getID())
+						 * + "    " +
+						 * db.getStudents().getByID(student.getID()));
+						 */
 						System.out.print(student.getName());
 					} catch (Exception e) {
 						System.out.print("failed.\n");
@@ -230,37 +230,24 @@ public class Main {
 
 				if (cmd.equals("remove_stud") == true) {
 					try {
-						boolean isFound = false;
 						System.out.print("Student name:   ");
 						String stud_name = inp.nextLine();
 						System.out.print("Student surname:   ");
 						String stud_surname = inp.nextLine();
-						Student student = db.getStudents().getByName(stud_name, stud_surname);
-						Collection<Student> students = db.Students()
-								.getAll();
-						boolean isFound = false;
-						for (Student st : students) {
-							if (st.getName().equals(stud_name)
-									&& st.getSurname().equals(stud_surname) && isFound==false ) {
-								db.Students().remove(student.getID());								
-								System.out.print("ok\n");
-								isFound = true;
-								//if (isFound == true){break;}
-							} 
-							} else {
-								System.out.print("Student was not faund\n");
-							}
+						Student student = db.Students().getByName(stud_name,
+								stud_surname);
+						if (student == null) {
+							System.out
+									.print("Failed. Student wat not found. \n");
+							continue;
 						}
-						/*
-						else {
-							System.out.print("Student was not faund\n");
-						}*/
-						
+						db.Students().remove(student.getID());
+						System.out.print("ok\n");
 
 					} catch (Exception e) {
-						
+
 						System.out.print("failed.\n");
-						
+
 					}
 					continue;
 				}
@@ -268,8 +255,7 @@ public class Main {
 					try {
 						System.out.print("Enter subject:   ");
 						String sub = inp.nextLine();
-						Subject subject = db.Subjects()
-								.getSubjectByName(sub);
+						Subject subject = db.Subjects().getSubjectByName(sub);
 						db.Subjects().remove(subject.getID());
 						System.out.print("ok\n");
 					} catch (Exception e) {
@@ -290,8 +276,9 @@ public class Main {
 						String subj = inp.nextLine();
 						System.out.print("Mark:   ");
 						String mark = inp.nextLine();
-						
-						student.AddMark(new Subject(subj), Integer.parseInt(mark));
+
+						student.AddMark(new Subject(subj),
+								Integer.parseInt(mark));
 						System.out.print("ok\n");
 					} catch (Exception e) {
 						System.out.print("failed.\n");
@@ -309,8 +296,7 @@ public class Main {
 								stud_surname);
 						System.out.print("Subject name:   ");
 						String subj = inp.nextLine();
-						Subject subject = db.Subjects().getSubjectByName(
-								subj);
+						Subject subject = db.Subjects().getSubjectByName(subj);
 						// System.out.print(mark.getID());
 						// db.getStudents().RemoveMark(mark.getID());
 					} catch (Exception e) {
@@ -340,7 +326,8 @@ public class Main {
 					System.out.print("Bye bye :)\n");
 					return;
 				}
-				System.out.print("Failed! Command was not found. Please, try again! \n");
+				System.out
+						.print("Failed! Command was not found. Please, try again! \n");
 			}
 		} catch (Exception e) {
 
