@@ -123,4 +123,12 @@ public class TestGroupsRepository implements IGroupsRepository {
 		
 		return false;
 	}
+
+	@Override
+	public void updateGroup(Group group, String new_name)
+			throws RepositoryException {
+		Group g = this.getByID(group.getID());
+		g.setName(new_name);
+		
+	}
 }

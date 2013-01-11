@@ -130,4 +130,20 @@ public class TestStudentsRepository implements IStudentsRepository {
 		return false;
 	}
 
+	@Override
+	public void updateStudent(Student student, String new_name,
+			String new_surname) throws RepositoryException {
+		Student st = this.getByID(student.getID());
+		st.setDb(null);
+		try {
+			st.setName(new_name);
+			st.setSurname(new_surname);
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		st.setDb(this.db);
+		
+	}
+
 }

@@ -174,4 +174,22 @@ public class SubjectsRepository extends Repository implements ISubjectsRepositor
 		return true;
 	}
 
+	@Override
+	public void updateSubject(Subject subject, String new_name)
+			throws RepositoryException {	
+		Connection c = super.getConnection();
+		try {
+			String query = "update subjects set name = ? where id = ?;";
+			PreparedStatement ps = c.prepareStatement(query);
+			ps.setString(1, new_name);
+			ps.setInt(2, subject.getID());
+			ps.execute();
+			super.commit(c);
+		} catch (SQLException e) {
+			super.throwable(e, RepositoryException.err_enum.c_sql_err);
+		} finally {
+			super.closeConnection(c);
+		}
+	}
+
 }

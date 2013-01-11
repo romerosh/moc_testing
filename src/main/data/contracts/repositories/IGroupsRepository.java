@@ -18,5 +18,6 @@ public interface IGroupsRepository extends IRepository<Group> {
 	void removeStudent(Group group, Student student) throws RepositoryException;
 
 	void addStudent(Group group, Student student) throws RepositoryException;
+	void updateGroup (Group group, String new_name) throws RepositoryException;
 
 }

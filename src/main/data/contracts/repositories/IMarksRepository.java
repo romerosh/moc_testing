@@ -1,8 +1,8 @@
 package data.contracts.repositories;
 
 import data.orm.Mark;
-import data.orm.Student;
 
 public interface IMarksRepository extends IRepository<Mark>  {
+	public Mark GetMark(int subject, int Student, int mark) throws RepositoryException;
 
 }

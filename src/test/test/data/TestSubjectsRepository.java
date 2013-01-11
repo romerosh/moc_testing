@@ -91,6 +91,21 @@ public class TestSubjectsRepository implements ISubjectsRepository {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public void updateSubject(Subject subject, String new_name)
+			throws RepositoryException {
+		Subject sub = this.getByID(subject.getID());
+		sub.setDb(null);
+		try {
+			sub.setSubjName(new_name);
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sub.setDb(db);
+		
+	}
 	
 
 }

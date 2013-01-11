@@ -18,5 +18,7 @@ public interface IStudentsRepository extends IRepository<Student> {
 
 	public Student getByName(String name, String surname) throws RepositoryException;
 
+	void updateStudent (Student student, String new_name, String new_surname) throws RepositoryException;
+
 	
 }

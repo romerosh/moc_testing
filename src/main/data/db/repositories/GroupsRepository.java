@@ -152,7 +152,9 @@ public class GroupsRepository extends Repository implements IGroupsRepository {
 			if (key.next()) {
 				group = new Group();
 				int id = key.getInt("id");
+				String names = key.getString("name"); 
 				group.setID(id);
+				group.setName(names);
 				group.setDb(dataBaseService);
 			}
 		} catch (SQLException e) {
@@ -191,14 +193,20 @@ public class GroupsRepository extends Repository implements IGroupsRepository {
 		Connection c = super.getConnection();
 		Collection<Student> students = null;
 		try {
-			String query = "select * from group_students"
-					+ "where group_students.group_id = ? ;";
+			String query = "select * from students, groups "
+					+ "where groups.id = ?";
 			PreparedStatement ps = c.prepareStatement(query);
 			ps.setInt(1, newGroup.getID());
 			ResultSet key = ps.executeQuery();
 			students = new ArrayList<Student>();
 			while (key.next()) {
 				Student student = new Student();
+				int id = key.getInt("id");
+				String name = key.getString("name");
+				String surname = key.getString("surname");
+				student.setID(id);
+				student.setName(name);
+				student.setSurname(surname);
 				students.add(student);
 				student.setDb(dataBaseService);
 			}
@@ -216,14 +224,15 @@ public class GroupsRepository extends Repository implements IGroupsRepository {
 			throws RepositoryException {
 		Connection c = super.getConnection();
 		try {
-			String query = "delete from group_students"
-					+ "where group_students.group_id = ? and group_students.stud_id = ?; ";
+			String query = "delete from group_students "
+					+ "where group_id = ? and stud_id = ?; ";
 			PreparedStatement ps = c.prepareStatement(query);
 			ps.setInt(1, group.getID());
 			ps.setInt(2, student.getID());
 			ps.execute();
 			super.commit(c);
 		} catch (SQLException e) {
+			//e.printStackTrace();
 			super.throwable(e, RepositoryException.err_enum.c_sql_err);
 		} finally {
 			super.closeConnection(c);
@@ -261,6 +270,25 @@ public class GroupsRepository extends Repository implements IGroupsRepository {
 		obj.setID(g.getID());
 		obj.setDb(dataBaseService);
 		return true;
+	}
+
+	@Override
+	public void updateGroup(Group group, String new_name)
+			throws RepositoryException {
+		Connection c = super.getConnection();
+		try {
+			String query = "update groups set name = ? where id = ?;";
+			PreparedStatement ps = c.prepareStatement(query);
+			ps.setString(1, new_name);
+			ps.setInt(2, group.getID());
+			ps.execute();
+			super.commit(c);
+		} catch (SQLException e) {
+			super.throwable(e, RepositoryException.err_enum.c_sql_err);
+		} finally {
+			super.closeConnection(c);
+		}
+		
 	}
 
 }

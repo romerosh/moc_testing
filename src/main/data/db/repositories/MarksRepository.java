@@ -33,13 +33,15 @@ public class MarksRepository extends Repository implements IMarksRepository {
 			ResultSet key = ps.executeQuery();
 			marks = new ArrayList<Mark>();
 			while (key.next()) {
-
 				Mark mark = new Mark();
 				int id = key.getInt("id");
+				int m = key.getInt("mark");
+				int stud_id = key.getInt("student_id");
+				int subj_id = key.getInt("subject_id");
 				mark.setID(id);
-				mark.setMark(mark.getID());
-				mark.setStudent_id(mark.getStudent_id());
-				mark.setSubject_id(mark.getSubject_id());
+				mark.setMark(m);
+				mark.setStudent_id(stud_id);
+				mark.setSubject_id(subj_id);
 				mark.setDb(dataBaseService);
 				marks.add(mark);
 			}
@@ -109,7 +111,7 @@ public class MarksRepository extends Repository implements IMarksRepository {
 	public void remove(int ID) throws RepositoryException {
 		Connection c = super.getConnection();
 		try {
-			String query = "delete from marks where id = ?;";
+			String query = "delete from marks where id = ? ;";
 			PreparedStatement ps = c.prepareStatement(query);
 			ps.setInt(1, ID);
 			ps.execute();
@@ -150,6 +152,37 @@ public class MarksRepository extends Repository implements IMarksRepository {
 			return false;
 		obj.setDb(dataBaseService);
 		return true;
+	}
+
+	@Override
+	public Mark GetMark(int subject, int Student, int m)
+			throws RepositoryException {
+		Connection c = super.getConnection();
+		Mark mark = null;
+
+		try {
+			String query = "select * from marks where mark = ? AND student_id = ? AND subject_id = ? ;";
+			PreparedStatement ps = c.prepareStatement(query);
+			ps.setInt(1, m);
+			ps.setInt(2, Student);
+			ps.setInt(3, subject);
+			ResultSet key = ps.executeQuery();
+			if (key.next()) {
+				mark = new Mark();
+				int id = key.getInt("id");
+				int stud = key.getInt("student_id");
+				int subj = key.getInt("subject_id");
+				mark.setID(id);
+				mark.setStudent_id(stud);
+				mark.setSubject_id(subj);
+				mark.setDb(dataBaseService);
+			}
+		} catch (SQLException e) {
+			super.throwable(e, RepositoryException.err_enum.c_sql_err);
+		} finally {
+			super.closeConnection(c);
+		}
+		return mark;
 	}
 
 }

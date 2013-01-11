@@ -121,7 +121,6 @@ public class StudentsRepository extends Repository implements
 		} finally {
 			super.closeConnection(c);
 		}
-
 	}
 
 	@Override
@@ -150,13 +149,17 @@ public class StudentsRepository extends Repository implements
 		try {
 			String query = "select * from marks where student_id = ?;";
 			PreparedStatement ps = c.prepareStatement(query);
-			ResultSet key = ps.executeQuery();
 			ps.setInt(1, student.getID());
+			ResultSet key = ps.executeQuery();
 			marks = new ArrayList<Mark>();
 			while (key.next()) {
 				Mark mark = new Mark();
 				int id = key.getInt("id");
+				int m = key.getInt("mark");
+				int s = key.getInt("subject_id");
 				mark.setID(id);
+				mark.setMark(m);
+				mark.setSubject_id(s);
 				mark.setDb(dataBaseService);
 				marks.add(mark);
 			}
@@ -206,9 +209,11 @@ public class StudentsRepository extends Repository implements
 			if (key.next()) {
 				student = new Student();
 				int id = key.getInt("id");
+				String names = key.getString("name");
+				String sur_name = key.getString("surname");
 				student.setID(id);
-				student.setName(name);
-				student.setSurname(surname);
+				student.setName(names);
+				student.setSurname(sur_name);
 				student.setDb(dataBaseService);
 			}
 		} catch (SQLException e) {
@@ -231,6 +236,26 @@ public class StudentsRepository extends Repository implements
 		obj.setID(st.getID());
 		obj.setDb(dataBaseService);
 		return true;
+	}
+
+	@Override
+	public void updateStudent(Student student, String new_name,
+			String new_surname) throws RepositoryException {
+		Connection c = super.getConnection();
+		try {
+			String query = "update students set name = ?, surname = ? where id = ?;";
+			PreparedStatement ps = c.prepareStatement(query);
+			ps.setString(1, new_name);
+			ps.setString(2, new_surname);
+			ps.setInt(3, student.getID());
+			ps.execute();
+			super.commit(c);
+		} catch (SQLException e) {
+			super.throwable(e, RepositoryException.err_enum.c_sql_err);
+		} finally {
+			super.closeConnection(c);
+		}
+		
 	}
 
 }
