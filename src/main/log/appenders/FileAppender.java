@@ -63,7 +63,7 @@ public class FileAppender implements ILogAppender {
 	}
 
 	@Override
-	synchronized public void logMessage(String message) {
+	synchronized public void logMessage(String message,String messageType) {
 		Date currentTime = getCurrentDate();
 		if (this.isStorage(currentTime)) {
 			this.storage(currentTime);
@@ -74,6 +74,11 @@ public class FileAppender implements ILogAppender {
 	@Override
 	public void dispose() {
 		fileManager.close();
+	}
+
+	@Override
+	public void logMessage(Throwable th, String messageType) {
+		
 	}
 
 }

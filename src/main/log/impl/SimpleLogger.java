@@ -1,5 +1,9 @@
 package log.impl;
 
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -20,7 +24,16 @@ public class SimpleLogger implements ILogger {
 		Collection<ILogAppender> aps = msgAppenders.get(msgType);
 		if (aps != null) {
 			for (ILogAppender appender : aps) {
-				appender.logMessage(msgType + ": " + message);
+				appender.logMessage(message, msgType);
+			}
+		}
+	}
+
+	private void logMessage(Throwable throwable, String msgType) {
+		Collection<ILogAppender> aps = msgAppenders.get(msgType);
+		if (aps != null) {
+			for (ILogAppender appender : aps) {
+				appender.logMessage(throwable, msgType);
 			}
 		}
 	}
@@ -53,12 +66,19 @@ public class SimpleLogger implements ILogger {
 			if (ap == null) {
 				ap = new ArrayList<ILogAppender>();
 				msgAppenders.put(mType, ap);
-			} else {
-				ap.add(appender);
-			}
+			} 
 			ap.add(appender);
-
 		}
+	}
+
+	@Override
+	public void error(Throwable throwable) {
+		logMessage(throwable, MessageType.ERROR.name());
+	}
+
+	@Override
+	public void debug(Throwable throwable) {
+		logMessage(throwable, MessageType.DEBUG.name());
 	}
 
 }

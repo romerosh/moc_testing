@@ -29,7 +29,7 @@ public class Repository {
 
 	protected void throwable(Exception e, err_enum err)
 			throws RepositoryException {
-		
+		log.error(e);
 		if (e instanceof RepositoryException)
 			throw (RepositoryException) e;
 		else
@@ -38,8 +38,7 @@ public class Repository {
 
 	protected void throwable(Exception e, String text)
 			throws RepositoryException {
-		log.error(e.getMessage());
-		
+		log.error(e);
 		if (e instanceof RepositoryException)
 			throw (RepositoryException) e;
 		else

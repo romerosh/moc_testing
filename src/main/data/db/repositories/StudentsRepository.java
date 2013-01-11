@@ -1,5 +1,6 @@
 package data.db.repositories;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +23,7 @@ import data.orm.Student;
 
 public class StudentsRepository extends Repository implements
 		IStudentsRepository {
+
 
 	public StudentsRepository(DataBaseService dataBaseService,
 			IDBConnectionFactory connectionFactory) {
@@ -210,6 +212,7 @@ public class StudentsRepository extends Repository implements
 				student.setName(name);
 				student.setSurname(surname);
 				student.setDb(dataBaseService);
+				
 			}
 		} catch (SQLException e) {
 			super.throwable(e, RepositoryException.err_enum.c_sql_err);
