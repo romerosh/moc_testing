@@ -47,6 +47,8 @@ public class Group extends ORMObject {
 				this.db.Students().attach(student);
 				this.db.Groups().addStudent(this, student);
 			} catch (RepositoryException e) {
+				//log.error();
+				e.printStackTrace();
 				throw new ORMObjectException("The student can not add to group");
 			}
 			log.info("add student to group");

@@ -21,7 +21,7 @@ import data.orm.ORMObjectException;
 import data.orm.Student;
 
 public class GroupsRepository extends Repository implements IGroupsRepository {
-
+	
 	public GroupsRepository(IDataBaseService dataBaseService,
 			IDBConnectionFactory connectionFactory) {
 		super(dataBaseService, connectionFactory);
@@ -236,7 +236,7 @@ public class GroupsRepository extends Repository implements IGroupsRepository {
 			throws RepositoryException {
 		Connection c = super.getConnection();
 		try {
-			String query = "insert into group_students (group_id, stud_id) values (?,?) returning id;";
+			String query = "insert into group_students (group_id, stud_id) values (?,?);";
 			PreparedStatement ps = c.prepareStatement(query);
 			ps.setInt(1, group.getID());
 			ps.setInt(2, student.getID());

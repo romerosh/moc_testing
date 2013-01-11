@@ -9,6 +9,7 @@ import java.util.Scanner;
 import log.ILoggerProvider;
 import log.MessageType;
 import log.SimpleLoggerFactory;
+import log.appenders.ConsoleAppender;
 import log.appenders.FileAppender;
 import log.appenders.file.FileManager;
 import log.impl.SimpleLoggerProvider;
@@ -43,7 +44,7 @@ public class Main {
 
 		SimpleLoggerProvider logProvider = new SimpleLoggerProvider();
 
-		// logProvider.addAppenderForMsgTypes(fileAppender, msgTypes);
+		 logProvider.addAppenderForMsgTypes(new ConsoleAppender(), msgTypes);
 		return logProvider;
 	}
 
@@ -330,7 +331,6 @@ public class Main {
 						.print("Failed! Command was not found. Please, try again! \n");
 			}
 		} catch (Exception e) {
-
 			e.printStackTrace();
 			return;
 		} finally {

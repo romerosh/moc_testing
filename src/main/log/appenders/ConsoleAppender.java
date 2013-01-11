@@ -6,13 +6,11 @@ public class ConsoleAppender implements ILogAppender {
 
 	@Override
 	public void logMessage(String message) {
-		// TODO Auto-generated method stub
-
+		System.out.println(message);
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 
 	}
 

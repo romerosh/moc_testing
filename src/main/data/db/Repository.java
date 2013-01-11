@@ -3,11 +3,15 @@ package data.db;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import log.ILogger;
+import log.SimpleLoggerFactory;
+
 import data.contracts.IDataBaseService;
 import data.contracts.repositories.RepositoryException;
 import data.contracts.repositories.RepositoryException.err_enum;
 
 public class Repository {
+	private final static ILogger log = SimpleLoggerFactory.getLogger();
 
 	protected Connection connection;
 	protected boolean isClosed;
@@ -25,6 +29,7 @@ public class Repository {
 
 	protected void throwable(Exception e, err_enum err)
 			throws RepositoryException {
+		
 		if (e instanceof RepositoryException)
 			throw (RepositoryException) e;
 		else
@@ -33,6 +38,8 @@ public class Repository {
 
 	protected void throwable(Exception e, String text)
 			throws RepositoryException {
+		log.error(e.getMessage());
+		
 		if (e instanceof RepositoryException)
 			throw (RepositoryException) e;
 		else

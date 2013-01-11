@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import log.ILogger;
+import log.SimpleLoggerFactory;
+
 import data.contracts.repositories.IStudentsRepository;
 import data.contracts.repositories.RepositoryException;
 import data.db.DataBaseService;
