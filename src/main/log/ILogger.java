@@ -14,4 +14,8 @@ public interface ILogger {
 
 	void warn(String message);
 
+	void debug(Throwable throwable);
+	
+	void error(Throwable throwable);
+
 }

@@ -40,7 +40,7 @@ public class Main {
 
 	public static ILoggerProvider prepareLogProvider() {
 		List<MessageType> msgTypes = Arrays.asList(MessageType.INFO,
-				MessageType.ERROR, MessageType.WARN);
+				MessageType.DEBUG, MessageType.WARN, MessageType.ERROR);
 		FileAppender fileAppender = new FileAppender();
 		fileAppender.setFile(new FileManager("lab5.log"));
 
