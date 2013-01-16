@@ -14,6 +14,7 @@ import log.MessageType;
 
 public class SimpleLogger implements ILogger {
 
+	
 	private HashMap<String, Collection<ILogAppender>> msgAppenders;
 
 	public SimpleLogger() {

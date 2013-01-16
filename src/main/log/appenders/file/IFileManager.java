@@ -19,5 +19,11 @@ public interface IFileManager {
 	String getFileName();
 
 	String getFileNameWithoutExp();
-	boolean createIfNotExist();
+
+	boolean storage(String newFileName);
+
+	void writeln(Throwable th);
+
+	String getFileExp();
+
 }

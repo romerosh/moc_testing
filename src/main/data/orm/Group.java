@@ -9,7 +9,7 @@ import data.contracts.IDataBaseService;
 import data.contracts.repositories.RepositoryException;
 
 public class Group extends ORMObject {
-	private int ID;
+	private int ID = -1;
 	private String Name;
 	private final static ILogger log = SimpleLoggerFactory.getLogger();
 
@@ -36,6 +36,7 @@ public class Group extends ORMObject {
 	public void setName(String name) throws RepositoryException {
 		Name = name;
 		if (this.db != null) {
+			this.db.Groups().attach(this);
 			this.db.Groups().update(this);
 		}
 
@@ -44,14 +45,15 @@ public class Group extends ORMObject {
 	public void addStudent(Student student) throws ORMObjectException {
 		if (this.db != null) {
 			try {
+				this.db.Groups().attach(this);
 				this.db.Students().attach(student);
 				this.db.Groups().addStudent(this, student);
 			} catch (RepositoryException e) {
-				//log.error();
-				e.printStackTrace();
+				log.error(e);
 				throw new ORMObjectException("The student can not add to group");
 			}
-			log.info("add student to group");
+			log.info("add student '" + student.getName() + "' to group '"
+					+ this.getName() + "'");
 		} else
 			throw new ORMObjectException(
 					"This group was not linked with repository");
@@ -60,6 +62,7 @@ public class Group extends ORMObject {
 	public void removeStudent(Student student) throws ORMObjectException,
 			RepositoryException {
 		if (this.db != null) {
+			this.db.Groups().attach(this);
 			this.db.Students().attach(student);
 			this.db.Groups().removeStudent(this, student);
 		} else
@@ -85,6 +88,7 @@ public class Group extends ORMObject {
 	public Collection<Student> getStudents() throws ORMObjectException,
 			RepositoryException {
 		if (this.db != null) {
+			this.db.Groups().attach(this);
 			return this.db.Groups().getAllByGroup(this);
 		} else
 			throw new ORMObjectException(
@@ -94,6 +98,7 @@ public class Group extends ORMObject {
 	public double getAverageMark() throws ORMObjectException,
 			RepositoryException {
 		if (this.db != null) {
+			this.db.Groups().attach(this);
 			return this.db.Groups().getAverageMark(this.ID);
 		} else
 			throw new ORMObjectException(

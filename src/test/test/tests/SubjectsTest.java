@@ -31,7 +31,7 @@ public class SubjectsTest {
 		SimpleLoggerFactory.Dispose();
 	}
 	@Test
-	public void addGroupTest() throws ORMObjectException, RepositoryException {
+	public void addSubjectTest() throws ORMObjectException, RepositoryException {
 		IDataBaseService db = new TestDataBaseService();
 		
 		//Create group

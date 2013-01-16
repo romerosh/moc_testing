@@ -23,7 +23,6 @@ public class FileHelper {
 			return new Date(creationTime.toMillis());
 
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		return null;
 	}
@@ -40,7 +39,6 @@ public class FileHelper {
 		try {
 			result = file.createNewFile();
 		} catch (IOException e) {
-			e.printStackTrace();
 			return false;
 		}
 		return result;

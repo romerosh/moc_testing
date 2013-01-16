@@ -14,7 +14,6 @@ import data.orm.Student;
 public class TestStudentsRepository implements IStudentsRepository {
 
 	Collection<Student> students = new ArrayList<Student>();
-	Collection<Mark> marks = new ArrayList<Mark>();
 	IDataBaseService db;
 
 	public TestStudentsRepository(IDataBaseService db) {
@@ -78,29 +77,23 @@ public class TestStudentsRepository implements IStudentsRepository {
 
 
 	@Override
-	public Collection<Mark> GetMarks(Student student) {
+	public Collection<Mark> GetMarks(Student student) throws RepositoryException {
 		Collection<Mark> allmarks = new ArrayList<Mark>();
-		for (Mark m : marks) {
-			if (student.getID() == m.getStudent_id()) {
-				allmarks.add(m);
+		
+		try {
+			for (Mark m : db.Marks().getAll()) {
+				if (student.getID() == m.getStudent_id()) {
+					allmarks.add(m);
+				}
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return allmarks;
 	}
 
-	private int MaxMarkID() {
-		if (marks.size() == 0) {
-			return 0;
-		}
-		int max = marks.iterator().next().getID();
-		for (Mark m : marks) {
 
-			if (m.getID() > max) {
-				max = m.getID();
-			}
-		}
-		return max;
-	}
 
 
 	@Override

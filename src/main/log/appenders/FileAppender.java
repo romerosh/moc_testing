@@ -1,10 +1,6 @@
 package log.appenders;
 
-import helpers.FileHelper;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.Date;
 
 import log.ILogAppender;
@@ -24,32 +20,32 @@ public class FileAppender implements ILogAppender {
 	}
 
 	protected boolean isStorage(Date currentTime) {
-		return currentTime.getTime()
-				- fileManager.getFileCreationTime().getTime() > MSecsInDay;
+		Date fileCreationTime = fileManager.getFileCreationTime();
+		if (fileCreationTime == null)
+			return true;
+		return currentTime.getTime() - fileCreationTime.getTime() > MSecsInDay;
 	}
 
-	@SuppressWarnings("deprecation")
 	protected void storage(Date currentTime) {
-		fileManager.close();
 		StringBuilder newFileName = new StringBuilder();
-		newFileName.append(fileManager.getFileName());
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(currentTime);
+		newFileName.append(fileManager.getFileNameWithoutExp());
+		newFileName.append("-");
+		newFileName.append(Integer.toString(calendar.get(Calendar.YEAR)));
+		newFileName.append("-");
+		newFileName.append(Integer.toString(calendar.get(Calendar.MONTH)+1));
+		newFileName.append("-");
+		newFileName.append(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)));
 		newFileName.append(".");
-		newFileName.append(Integer.toString(currentTime.getDay()));
-		newFileName.append(".");
-		newFileName.append(Integer.toString(currentTime.getMonth()));
-		newFileName.append(".");
-		newFileName.append(Integer.toString(currentTime.getYear()));
-		FileHelper
-				.renameFile(fileManager.getFileName(), newFileName.toString());
-		FileHelper.createNewFile(fileManager.getFileName());
-		fileManager.open();
+		newFileName.append(fileManager.getFileExp());
+		fileManager.storage(newFileName.toString());
 	}
 
-	public void setFile(IFileManager fileManager) {
+	public void setFileManager(IFileManager fileManager) {
 		if (fileManager != null) {
 			try {
 				this.fileManager = fileManager;
-				this.fileManager.createIfNotExist();
 				Date currentTime = getCurrentDate();
 				if (this.isStorage(currentTime)) {
 					this.storage(currentTime);
@@ -63,22 +59,28 @@ public class FileAppender implements ILogAppender {
 	}
 
 	@Override
-	synchronized public void logMessage(String message,String messageType) {
+	synchronized public void logMessage(String message, String messageType) {
+		if (fileManager == null)
+			return;
 		Date currentTime = getCurrentDate();
 		if (this.isStorage(currentTime)) {
 			this.storage(currentTime);
 		}
 
-	}
+		fileManager.writeln(messageType + " : " + message);
 
-	@Override
-	public void dispose() {
-		fileManager.close();
 	}
 
 	@Override
 	public void logMessage(Throwable th, String messageType) {
-		
+		fileManager.writeln(messageType + ":");
+		fileManager.writeln(th);
+	}
+
+	@Override
+	public void dispose() {
+		if (fileManager != null)
+			fileManager.close();
 	}
 
 }
